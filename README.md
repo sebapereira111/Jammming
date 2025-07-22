@@ -1,3 +1,34 @@
+# Jammming
+
+## Proposito del proyecto
+
+Este proyecto es parte del curso FSE de Codecademy
+
+En el mismo se creará una aplicación web React llamada Jammming. Se utilizarán conocimientos de los componentes de React, el estado de paso y las solicitudes con la API de Spotify para crear un sitio web que permita a los usuarios buscar en la biblioteca de Spotify, crear una lista de reproducción personalizada y luego guardarla en su cuenta de Spotify.
+
+## Tecnologias usadas
+
+- HTML
+- CSS
+- JavaScript
+- React
+- HTTP Requests and Responses
+- Authentication
+
+## Características
+
+- Los usuarios pueden buscar canciones por título.
+- También puede incluir funcionalidad para buscar por otros atributos como nombre del artista, género, etc.
+- Los usuarios pueden ver información sobre cada canción, como título, artista y álbum de las canciones que consultaron.
+- También puedes incluir otra información.
+- Los usuarios pueden exportar su lista de reproducción personalizada a su cuenta personal de Spotify.
+
+## Trabajo futuro
+
+...
+
+---
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
