@@ -5,22 +5,20 @@ function SearchBar() {
     const [buscar, setBuscar] = useState("");
     function handleSubmit(e) {
         e.preventDefault();
-        alert("Busqueda en proceso");
+        alert(`Buscando ${buscar}`);
     }
     return (
         <>
-            <div className='tarjeta'>
-                <form className='searchBar' onSubmit={handleSubmit}>
-                    <input
-                    id="buscar"
-                    name="buscar"
-                    type="text"
-                    value={buscar}
-                    onChange={(e) => setBuscar(e.target.value)}
+            <form className='searchBar' onSubmit={handleSubmit}>
+                <input
+                id="buscar"
+                name="buscar"
+                type="text"
+                value={buscar}
+                onChange={(e) => setBuscar(e.target.value)}
                 />
                 <button type="submit">Buscar</button>
-                </form>
-            </div>
+            </form>
         </>
     )
 }

@@ -7,6 +7,7 @@ body {
   max-width: 1280px;
   margin: 0 auto;
   --color-encabezado: #251658;
+  --color-bloque: #251658;
   --color-texto: #E8E6F3;
   --color-boton: #6464C9;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
