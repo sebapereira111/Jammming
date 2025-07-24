@@ -7,7 +7,23 @@
     align-items: center;
 }
 
-input {
+.searchInput {
+    display: flex;
+    justify-content: center;
     width: 90%;
-    max-width: 24rem;
+}
+
+input {
+    flex-grow: 1;
+    max-width: 20rem;
+    min-width: 5rem;
+}
+
+.botonTextoBusqueda {
+    background-color: var(--color-input);
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    border-radius: 0;
+    font-size: 1rem;
 }

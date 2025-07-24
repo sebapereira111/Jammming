@@ -1,0 +1,27 @@
+.textoTrack {
+    color: var(--color-texto);
+}
+
+.nombre {
+    font-weight: bold;
+}
+
+.artista {
+    font-size: 0.75rem;
+}
+
+.album {
+    font-size: 0.75rem;
+}
+
+.trackDivOut {
+    padding: 0 1rem 1rem 1rem;
+}
+
+.trackDivIn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}

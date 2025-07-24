@@ -3,20 +3,33 @@ body {
 }
 
 :root {
-  width: 100vw;
+  width: 100%;
   max-width: 1280px;
   margin: 0 auto;
   --color-encabezado: #251658;
   --color-bloque: #251658;
   --color-texto: #E8E6F3;
   --color-boton: #6464C9;
+  --color-input: white;
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   background-color: #7E39B7;
 }
 
 h1 {
   font-size: 2rem;
+  font-weight: bold;
   color: var(--color-texto);
+}
+
+input {
+  height: 2rem;
+  background-color: var(--color-input);
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  outline: none;
 }
 
 button {
@@ -40,5 +53,5 @@ button:active {
 }
 
 .tarjeta {
-  padding: 0.5rem;
+  padding: 1rem;
 }

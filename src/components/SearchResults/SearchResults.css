@@ -1,0 +1,21 @@
+.searchResults {
+    background-color: var(--color-bloque);
+}
+
+.tituloResultados {
+    height: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.botonBorrarResultados {
+    background-color: transparent;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    border-radius: 0;
+    font-size: 1rem;
+}
