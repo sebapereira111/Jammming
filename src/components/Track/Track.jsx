@@ -1,19 +1,21 @@
 import './Track.css'
 
 function Track({ name, artist, album }) {
+    function handleAgregar() {
+        alert("Cancion Agregada!");
+
+    }
     return (
         <>
-            <div className='trackDivOut'>
-                <div className='trackDivIn'>
-                    <div>
-                        <p className='textoTrack nombre'>{name}</p>
-                        <p className='textoTrack artista'>{artist}</p>
-                        <p className='textoTrack album'>{album}</p>
-                    </div>  
-                    <button className='botonBorrarResultados'>+</button>
+            <div className='seccionTrack'>
+                <div className='contenidoTrack'>
+                    <p className='textoNombre'>{name}</p>
+                    <p className='textoaArtista'>{artist}</p>
+                    <p className='taxtoAlbum'>{album}</p>
                 </div>
-                <hr />
+                <button className='botonAgregarTrack' onClick={handleAgregar}>+</button>
             </div>
+            <hr className='separadorTrack' />
         </>
     )
 }

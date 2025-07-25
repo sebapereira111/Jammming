@@ -1,27 +1,32 @@
-.textoTrack {
-    color: var(--color-texto);
-}
-
-.nombre {
+.textoNombre {
     font-weight: bold;
 }
 
-.artista {
+.textoaArtista {
     font-size: 0.75rem;
 }
 
-.album {
+.taxtoAlbum {
     font-size: 0.75rem;
 }
 
-.trackDivOut {
-    padding: 0 1rem 0 1rem;
-}
-
-.trackDivIn {
+.seccionTrack {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin-top: 1rem;
+}
+
+.botonAgregarTrack {
+    background-color: transparent;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    border-radius: 1rem;
+    font-size: 1rem;
+}
+
+.separadorTrack {
+    margin-top: 0;
+    margin-bottom: 0;
 }
