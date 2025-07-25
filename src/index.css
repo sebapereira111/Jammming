@@ -63,6 +63,3 @@ button:active {
   box-shadow: inset 0px 0px 5px var(--color-texto);
 }
 
-.tarjeta {
-  padding: 1rem;
-}

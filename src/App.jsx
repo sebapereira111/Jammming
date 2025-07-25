@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import SearchBar from './components/SearchBar/SearchBar'
 import SearchResults from './components/SearchResults/SearchResults'
+import Playlist from './components/Playlist/Playlist'
 
 const resultados = {
     "": [],
@@ -44,16 +45,16 @@ function App() {
             <header>
                 <h1>Jammming</h1>
             </header>
-            <div className='tarjeta'>
-                <SearchBar setBuscado={setBuscado} />
-            </div>
+            <SearchBar setBuscado={setBuscado} />
             {(buscado == "numeros" || buscado == "letras")?
-                <div className='tarjeta'>
+                <div className='resultadosConPlaylist'>
                     <SearchResults buscado={buscado} setBuscado={setBuscado} resultados={resultados[buscado]} />
+                    <Playlist />
                 </div>
             :
                 <p>Instrucciones de uso. Con los datos de prueba solo son validos "numeros" o "letras"</p>
             }
+            
         </>
     )
 }

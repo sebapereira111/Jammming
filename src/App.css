@@ -9,3 +9,8 @@ header {
   top: 0;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
 }
+.resultadosConPlaylist {
+  padding: 0 1rem 0 1rem;
+  display: flex;
+  gap: 1rem;
+}

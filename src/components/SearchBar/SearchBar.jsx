@@ -7,16 +7,16 @@ function SearchBar({ setBuscado }) {
         e.preventDefault();
         setBuscado(buscar);
     }
-    function handleBorrar() {
+    function handleBorrarBusqueda() {
         setBuscar("");
-        document.getElementById('botonX').textContent = "";
+        document.getElementById('botonXBusqueda').textContent = "";
     }
-    function handleChange(e) {
+    function handleChangeBusqueda(e) {
         setBuscar(e.target.value)
         if (e.target.value == "") {
-            document.getElementById('botonX').textContent = "";
+            document.getElementById('botonXBusqueda').textContent = "";
         } else {
-            document.getElementById('botonX').textContent = "❌";
+            document.getElementById('botonXBusqueda').textContent = "❌";
         }
     }
     return (
@@ -27,11 +27,12 @@ function SearchBar({ setBuscado }) {
                     <input
                         id="buscar"
                         name="buscar"
+                        className='inputSearchBar'
                         type="text"
                         value={buscar}
-                        onChange={handleChange}
+                        onChange={handleChangeBusqueda}
                     />
-                    <button id='botonX' type='button' className='botonTextoBusqueda' onClick={handleBorrar}></button>
+                    <button id='botonXBusqueda' type='button' className='botonTextoBusqueda' onClick={handleBorrarBusqueda}></button>
                 </div>
                 <button type="submit">Buscar</button>
             </form>

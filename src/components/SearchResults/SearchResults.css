@@ -1,9 +1,12 @@
 .resultadosBusquedaPrincipal {
     background-color: var(--color-bloque);
     padding: 1rem;
+    flex-grow: 1;
+    flex-basis: 50%;
 }
 
 .resultadosBusquedaTitulo {
+    min-height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
