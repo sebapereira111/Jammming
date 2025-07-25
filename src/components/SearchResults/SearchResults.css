@@ -1,14 +1,13 @@
-.searchResults {
+.resultadosBusquedaPrincipal {
     background-color: var(--color-bloque);
+    padding: 1rem;
 }
 
-.tituloResultados {
-    height: 4rem;
+.resultadosBusquedaTitulo {
+    height: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .botonBorrarResultados {

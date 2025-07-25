@@ -47,9 +47,13 @@ function App() {
       <div className='tarjeta'>
         <SearchBar setBuscado={setBuscado} />
       </div>
-      <div className='tarjeta'>
-        <SearchResults buscado={buscado} resultados={resultados[buscado]} />
-      </div>
+      {(buscado == "numeros" || buscado == "letras")?
+        <div className='tarjeta'>
+          <SearchResults buscado={buscado} setBuscado={setBuscado} resultados={resultados[buscado]} />
+        </div>
+        :
+        <p>Instrucciones de uso. Con los datos de prueba solo son validos "numeros" o "letras"</p>
+      }
     </>
   )
 }
