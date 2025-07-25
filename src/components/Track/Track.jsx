@@ -1,10 +1,14 @@
 import './Track.css'
 
-function Track({ name, artist, album }) {
+function Track({ name, artist, album, boton }) {
     function handleAgregar() {
-        alert("Cancion Agregada!");
-
+        if (boton == "+") {
+            alert("Cancion agregada!");
+        } else {
+            alert("Cancion eliminada!");
+        }
     }
+    
     return (
         <>
             <div className='seccionTrack'>
@@ -13,7 +17,7 @@ function Track({ name, artist, album }) {
                     <p className='textoTrack textoaArtista'>{artist}</p>
                     <p className='textoTrack taxtoAlbum'>{album}</p>
                 </div>
-                <button className='botonAgregarTrack' onClick={handleAgregar}>+</button>
+                <button className='botonAgregarTrack' onClick={handleAgregar}>{boton}</button>
             </div>
             <hr className='separadorTrack' />
         </>
