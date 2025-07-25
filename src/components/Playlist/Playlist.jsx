@@ -3,7 +3,7 @@ import './Playlist.css'
 
 function Playlist() {
     const [name, setName] = useState("");
-    function handleChange(e) {
+    function handleChangePlaylist(e) {
         setName(e.target.value)
         if (e.target.value == "") {
             document.getElementById('botonXPlaylist').textContent = "";
@@ -26,7 +26,8 @@ function Playlist() {
                             className='inputPlaylist'
                             type="text"
                             value={name}
-                            onChange={handleChange}
+                            placeholder='Nombre de playlist'
+                            onChange={handleChangePlaylist}
                         />
                         <button id='botonXPlaylist' type='button' className='botonTextoPlaylist' onClick={handleBorrar}></button>
                     </div>
