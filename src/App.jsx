@@ -24,7 +24,7 @@ const resultados = {
     ],
     letras: [
         {
-            name: "NombreA",
+            name: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean commodo nunc augue, ac faucibus orci vestibulum quis. Aliquam vel leo sit amet elit varius maximus. Curabitur laoreet lorem aliquet, blandit nulla vel, finibus justo. In hac habitasse platea dictumst. Proin luctus nibh id erat rhoncus, ac condimentum tellus congue. Mauris rutrum ultrices tortor. Curabitur pellentesque sodales cursus. FINAL",
             artist: "ArtistaA",
             album: "AlbumA"
         }, 

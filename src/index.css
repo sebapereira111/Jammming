@@ -21,6 +21,12 @@ h1 {
   color: var(--color-texto);
 }
 
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-texto);
+}
+
 p {
   font-size: 1rem;
   color: var(--color-texto);

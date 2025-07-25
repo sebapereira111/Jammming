@@ -10,10 +10,15 @@
     font-size: 0.75rem;
 }
 
+.contenidoTrack {
+    flex-grow: 1;
+    max-width: calc(100% - 2rem);
+}
+
 .seccionTrack {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
     margin-top: 1rem;
 }
 

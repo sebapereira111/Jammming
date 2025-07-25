@@ -9,9 +9,9 @@ function Track({ name, artist, album }) {
         <>
             <div className='seccionTrack'>
                 <div className='contenidoTrack'>
-                    <p className='textoNombre'>{name}</p>
-                    <p className='textoaArtista'>{artist}</p>
-                    <p className='taxtoAlbum'>{album}</p>
+                    <p className='textoTrack textoNombre'>{name}</p>
+                    <p className='textoTrack textoaArtista'>{artist}</p>
+                    <p className='textoTrack taxtoAlbum'>{album}</p>
                 </div>
                 <button className='botonAgregarTrack' onClick={handleAgregar}>+</button>
             </div>
