@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './SearchBar.css'
 
-function SearchBar({ setBuscado }) {
+function SearchBar({ busquedaDeMusicas }) {
     const [buscar, setBuscar] = useState("");
-    // Al presionar Buscar modifica la variable buscado, lo que actualiza la lista de resultados
+
+    // Al presionar Buscar llama a la funcion que realiza la busqueda
     function handleSubmit(e) {
         e.preventDefault();
-        setBuscado(buscar);
+        busquedaDeMusicas(buscar);
     }
     // Borrado del termino de busqueda con la X
     function handleBorrarBusqueda() {

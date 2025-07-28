@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import './Playlist.css'
+import Track from '../Track/Track'
 
-function Playlist() {
+function Playlist({ listaDeMusicas, setListaDeMusicas }) {
     /* Variable para el nombre de la playlist */
     const [name, setName] = useState("");
+
     /* Para modificar el nomre la playlist y unificar con el texto */
     function handleChangePlaylist(e) {
         setName(e.target.value)
@@ -13,6 +15,7 @@ function Playlist() {
             document.getElementById('botonXPlaylist').textContent = "❌";
         }
     }
+
     /* Para borrar el nombre de la playlist */
     function handleBorrarNombrePlaylist() {
         setName("");
@@ -36,6 +39,7 @@ function Playlist() {
                         <button id='botonXPlaylist' type='button' className='botonTextoPlaylist' onClick={handleBorrarNombrePlaylist}></button>
                     </div>
                 </form>
+                {listaDeMusicas.map(item => (<Track id={item.id} name={item.name} artist={item.artist} album={item.album} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
                 {/* Falta agregar el codigo para mostrar las musicas de la playlist */}
             </div>
         </>

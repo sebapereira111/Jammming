@@ -1,11 +1,17 @@
 import './Track.css'
 
-function Track({ name, artist, album, boton }) {
+function Track({ id, name, artist, album, boton, setListaDeMusicas }) {
     function handleAgregarOEliminar() {
         if (boton == "+") {
-            alert("Cancion agregada!");
+            setListaDeMusicas(prev => [...prev, {
+                idPlaylist: 0,
+                id: id,
+                name: name,
+                artist: artist,
+                album: album
+            }]);
         } else {
-            alert("Cancion eliminada!");
+            alert(`Cancion eliminada!`);
         }
     }
     /* Falta el codigo para agregar o eliminar items de la lista e interactuar con la playlist */
@@ -26,3 +32,7 @@ function Track({ name, artist, album, boton }) {
 }
 
 export default Track
+
+
+
+
