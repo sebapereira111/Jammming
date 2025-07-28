@@ -40,7 +40,6 @@ function Playlist({ listaDeMusicas, setListaDeMusicas }) {
                     </div>
                 </form>
                 {listaDeMusicas.map((item, index) => (<Track index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
-                {/* Falta agregar el codigo para mostrar las musicas de la playlist */}
             </div>
         </>
     )

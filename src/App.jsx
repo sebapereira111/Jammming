@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar/SearchBar'
 import SearchResults from './components/SearchResults/SearchResults'
 import Playlist from './components/Playlist/Playlist'
 
-// Resultados es una variable para prueba hasta que se tenga conexion al API
+// datosParaPrueba es una variable para prueba hasta que se tenga conexion al API
 
 const datosParaPrueba = {
     "": [],

@@ -14,7 +14,6 @@ function Track({ index, musica, boton, setListaDeMusicas }) {
             setListaDeMusicas(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
         }
     }
-    /* Falta el codigo para agregar o eliminar items de la lista e interactuar con la playlist */
 
     return (
         <>
