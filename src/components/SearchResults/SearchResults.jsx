@@ -22,7 +22,7 @@ function SearchResults({ palabraBuscada, setPalabraBuscada, listaDeResultados, s
                     </>
                     : <p>Busquemos algo!</p>}
                 </div>
-                {listaDeResultados.map(item => (<Track id={item.id} name={item.name} artist={item.artist} album={item.album} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
+                {listaDeResultados.map((item, index) => (<Track index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
             </div>
         </>
     )

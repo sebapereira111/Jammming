@@ -39,7 +39,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas }) {
                         <button id='botonXPlaylist' type='button' className='botonTextoPlaylist' onClick={handleBorrarNombrePlaylist}></button>
                     </div>
                 </form>
-                {listaDeMusicas.map(item => (<Track id={item.id} name={item.name} artist={item.artist} album={item.album} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
+                {listaDeMusicas.map((item, index) => (<Track index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
                 {/* Falta agregar el codigo para mostrar las musicas de la playlist */}
             </div>
         </>
