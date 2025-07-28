@@ -1,6 +1,10 @@
 import './SearchResults.css'
 import Track from '../Track/Track'
 
+/* Recibe 3 variables
+buscado es el termino de busqueda realizado
+setBuscado es para poder borrar el temino de busqueda y los resultados
+resultados es un objeto con los resultados :) */
 function SearchResults({ buscado, setBuscado, resultados }) {
     function handleBorrar() {
         setBuscado("");

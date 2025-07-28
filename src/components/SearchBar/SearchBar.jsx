@@ -3,14 +3,17 @@ import './SearchBar.css'
 
 function SearchBar({ setBuscado }) {
     const [buscar, setBuscar] = useState("");
+    // Al presionar Buscar modifica la variable buscado, lo que actualiza la lista de resultados
     function handleSubmit(e) {
         e.preventDefault();
         setBuscado(buscar);
     }
+    // Borrado del termino de busqueda con la X
     function handleBorrarBusqueda() {
         setBuscar("");
         document.getElementById('botonXBusqueda').textContent = "";
     }
+    // Modifica la variable buscar y unifica con el valor del input
     function handleChangeBusqueda(e) {
         setBuscar(e.target.value)
         if (e.target.value == "") {
@@ -19,6 +22,7 @@ function SearchBar({ setBuscado }) {
             document.getElementById('botonXBusqueda').textContent = "❌";
         }
     }
+    
     return (
         <>
             <form className='searchBar' onSubmit={handleSubmit}>
