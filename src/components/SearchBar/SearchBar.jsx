@@ -2,44 +2,40 @@ import { useState } from 'react'
 import './SearchBar.css'
 
 function SearchBar({ busquedaDeMusicas }) {
-    const [buscar, setBuscar] = useState("");
+    const [textoSearchbar, settextoSearchbar] = useState("");
 
     // Al presionar Buscar llama a la funcion que realiza la busqueda
     function handleSubmit(e) {
         e.preventDefault();
-        busquedaDeMusicas(buscar);
+        busquedaDeMusicas(textoSearchbar);
     }
+
     // Borrado del termino de busqueda con la X
     function handleBorrarBusqueda() {
-        setBuscar("");
-        document.getElementById('botonXBusqueda').textContent = "";
+        settextoSearchbar("");
     }
-    // Modifica la variable buscar y unifica con el valor del input
+
+    // Modifica la variable textoSearchbar y unifica con el valor del input
     function handleChangeBusqueda(e) {
-        setBuscar(e.target.value)
-        if (e.target.value == "") {
-            document.getElementById('botonXBusqueda').textContent = "";
-        } else {
-            document.getElementById('botonXBusqueda').textContent = "❌";
-        }
+        settextoSearchbar(e.target.value)
     }
     
     return (
         <>
-            <form className='searchBar' onSubmit={handleSubmit}>
-                <div className='searchInput'>
-                    <button type='submit' className='botonTextoBusqueda'>🔎</button>
+            <form className='searchbar-principal' onSubmit={handleSubmit}>
+                <div className='searchbar-input'>
+                    <button type='submit' className='searchbar-input-boton searchbar-input-boton-lupa' disabled={!textoSearchbar} >🔎</button>
                     <input
-                        id="buscar"
-                        name="buscar"
-                        className='inputSearchBar'
+                        id="textoBuscar"
+                        name="textoBuscar"
+                        className='searchbar-input-text'
                         type="text"
-                        value={buscar}
+                        value={textoSearchbar}
                         onChange={handleChangeBusqueda}
                     />
-                    <button id='botonXBusqueda' type='button' className='botonTextoBusqueda' onClick={handleBorrarBusqueda}></button>
+                    <button type='button' className='searchbar-input-boton searchbar-input-boton-x' disabled={!textoSearchbar} onClick={handleBorrarBusqueda}>❌</button>
                 </div>
-                <button type="submit">Buscar</button>
+                <button type="submit" disabled={!textoSearchbar} >Buscar</button>
             </form>
         </>
     )

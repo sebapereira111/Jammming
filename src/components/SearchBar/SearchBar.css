@@ -1,4 +1,4 @@
-.searchBar {
+.searchbar-principal {
     height: 10rem;
     width: 100%;
     display: flex;
@@ -7,19 +7,22 @@
     align-items: center;
 }
 
-.searchInput {
+.searchbar-input {
     display: flex;
     justify-content: center;
     width: 90%;
 }
 
-.inputSearchBar {
-    flex-grow: 1;
+.searchbar-input-text {
     max-width: 20rem;
     min-width: 5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: black;
 }
 
-.botonTextoBusqueda {
+.searchbar-input-boton {  
+    z-index: 100;
     background-color: var(--color-input);
     height: 2rem;
     width: 2rem;
@@ -27,4 +30,22 @@
     flex-shrink: 0;
     border-radius: 0;
     font-size: 1rem;
+}
+
+.searchbar-input-boton-lupa {
+    translate: 2rem;
+}
+
+.searchbar-input-boton-lupa:disabled {
+    background-color: white;
+    pointer-events: none;
+}
+
+.searchbar-input-boton-x {
+    translate: -2rem;
+}
+
+.searchbar-input-boton-x:disabled {
+    background-color: white;
+    z-index: -100;
 }

@@ -13,7 +13,6 @@
 }
 
 .playlist-nombre-texto {
-    flex-grow: 1;
     background-color: transparent;
     color: var(--color-texto);
     font-size: 2rem;
