@@ -19,7 +19,7 @@
     height: 3rem;
 }
 
-.playlist-boton-x-nombre-activo {
+.playlist-boton-x-nombre {
     display: block;
     background-color:transparent;
     min-width: 0;
@@ -30,7 +30,7 @@
     font-size: 1rem;
 }
 
-.playlist-boton-x-nombre-inactivo {
+.playlist-boton-x-nombre:disabled {
     display: none;
 }
 
