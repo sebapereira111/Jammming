@@ -46,7 +46,7 @@ const datosParaPrueba = {
 
 function App() {
     const [textoResultados, setTextoResultados] = useState(""); // Termino de busqueda que cambia al presionar Buscar
-    const [listaDeResultados, setListaDeResultados] = useState([])
+    const [listaDeResultados, setListaDeResultados] = useState([]) // Lista de musicas devueltas por la API
     const [listaDeMusicas, setListaDeMusicas] = useState([]); // Lista de musicas del playlist creado
 
     function busquedaDeMusicas(buscar) {
@@ -61,7 +61,7 @@ function App() {
                 <h1>Jammming</h1>
             </header>
             <SearchBar busquedaDeMusicas={busquedaDeMusicas} />
-            <div className='resultadosConPlaylist'>
+            <div className='app-resultados-y-playlist'>
                 <SearchResults textoResultados={textoResultados} setTextoResultados={setTextoResultados} listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />
             </div>           
