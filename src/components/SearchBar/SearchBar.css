@@ -23,6 +23,7 @@
     background-color: var(--color-input);
     height: 2rem;
     width: 2rem;
+    min-width: 0;
     flex-shrink: 0;
     border-radius: 0;
     font-size: 1rem;

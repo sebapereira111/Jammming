@@ -4,42 +4,60 @@ import Track from '../Track/Track'
 
 function Playlist({ listaDeMusicas, setListaDeMusicas }) {
     /* Variable para el nombre de la playlist */
-    const [name, setName] = useState("");
+    const [nombrePlaylist, setNombrePlaylist] = useState("");
+    /* Variable para activar y dasactivar el boton ❌ */
+    const [botonXNombrePlaylistActivo, setBotonXNombrePlaylistActivo] = useState(false);
 
-    /* Para modificar el nomre la playlist y unificar con el texto */
-    function handleChangePlaylist(e) {
-        setName(e.target.value)
+    /* Para modificar el nombre de la playlist y unificar con el texto.
+    Tambien hace aparecer y desaparecer el boton ❌ */
+    function handleChangeNombrePlaylist(e) {
+        setNombrePlaylist(e.target.value)
         if (e.target.value == "") {
-            document.getElementById('botonXPlaylist').textContent = "";
+            setBotonXNombrePlaylistActivo(false);
         } else {
-            document.getElementById('botonXPlaylist').textContent = "❌";
+            setBotonXNombrePlaylistActivo(true);
         }
     }
 
-    /* Para borrar el nombre de la playlist */
+    /* Para borrar el nombre de la playlist con la X */
     function handleBorrarNombrePlaylist() {
-        setName("");
-        document.getElementById('botonXPlaylist').textContent = "";
+        setNombrePlaylist("");
+        setBotonXNombrePlaylistActivo(false);
+    }
+
+    /* Borra la playlist completa */
+    function handleBorrarPlaylist() {
+        setListaDeMusicas([]);
+    }
+
+    /* Funcion para guardar la playlist a Spotify
+    Temporalmente solo emite una alerta */
+    function handleGuardarASpotify() {
+        alert("Guardado a Spotify");
     }
 
     return (
         <>
-            <div className='playlistPrincipal'>
+            <div className='playlist-principal'>
                 <form>
-                    <div className='playlistNameInput'>
+                    <div className='playlist-nombre'>
                         <input
-                            id="playlistName"
-                            name="playlistName"
-                            className='inputPlaylist'
-                            type="text"
-                            value={name}
+                            id='textoNombrePlaylist'
+                            name='textoNombrePlaylist'
+                            className='playlist-nombre-texto'
+                            type='text'
+                            value={nombrePlaylist}
                             placeholder='Nombre de playlist'
-                            onChange={handleChangePlaylist}
+                            onChange={handleChangeNombrePlaylist}
                         />
-                        <button id='botonXPlaylist' type='button' className='botonTextoPlaylist' onClick={handleBorrarNombrePlaylist}></button>
+                        <button id='botonXNombrePlaylist' type='button' className={botonXNombrePlaylistActivo ? "playlist-boton-x-nombre-activo" : "playlist-boton-x-nombre-inactivo"} onClick={handleBorrarNombrePlaylist}>❌</button>
                     </div>
                 </form>
                 {listaDeMusicas.map((item, index) => (<Track index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
+                <div className='playlist-botones-inferiores'>
+                    <button disabled={!listaDeMusicas.length} onClick={handleBorrarPlaylist} >Borrar playlist</button>
+                    <button disabled={!listaDeMusicas.length} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
+                </div>
             </div>
         </>
     )
