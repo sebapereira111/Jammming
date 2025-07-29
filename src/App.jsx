@@ -45,14 +45,14 @@ const datosParaPrueba = {
 }
 
 function App() {
-    const [palabraBuscada, setPalabraBuscada] = useState(""); // Termino de busqueda que cambia al presionar Buscar
+    const [textoResultados, setTextoResultados] = useState(""); // Termino de busqueda que cambia al presionar Buscar
     const [listaDeResultados, setListaDeResultados] = useState([])
     const [listaDeMusicas, setListaDeMusicas] = useState([]); // Lista de musicas del playlist creado
 
     function busquedaDeMusicas(buscar) {
         {/* Aca va el codigo para conectar a la API de Spotify */}
         setListaDeResultados(datosParaPrueba[(buscar == "numeros" || buscar == "letras" ? buscar : "")]);
-        setPalabraBuscada(buscar);
+        setTextoResultados(buscar);
     }
 
     return (
@@ -62,7 +62,7 @@ function App() {
             </header>
             <SearchBar busquedaDeMusicas={busquedaDeMusicas} />
             <div className='resultadosConPlaylist'>
-                <SearchResults palabraBuscada={palabraBuscada} setPalabraBuscada={setPalabraBuscada} listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
+                <SearchResults textoResultados={textoResultados} setTextoResultados={setTextoResultados} listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />
             </div>           
         </>
