@@ -4,11 +4,11 @@ function Track({ index, musica, boton, setListaDeMusicas }) {
     function handleAgregarOEliminar() {
         if (boton == "+") {
             setListaDeMusicas(prev => [...prev, {
-                idPlaylist: index,
                 id: musica.id,
                 name: musica.name,
                 artist: musica.artist,
-                album: musica.album
+                album: musica.album,
+                coverArt: musica.coverArt
             }]);
         } else {
             setListaDeMusicas(prev => [...prev.slice(0, index), ...prev.slice(index + 1)]);
