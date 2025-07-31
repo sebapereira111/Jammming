@@ -1,13 +1,8 @@
-.textoNombre {
-    font-weight: bold;
-}
-
-.textoaArtista {
-    font-size: 0.75rem;
-}
-
-.taxtoAlbum {
-    font-size: 0.75rem;
+.track-seccion {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
 }
 
 .track-contenido {
@@ -26,14 +21,19 @@
     flex-grow: 1;
 }
 
-.seccionTrack {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 1rem;
+.track-texto-nombre {
+    font-weight: bold;
 }
 
-.botonAgregarTrack {
+.track-texto-artista {
+    font-size: 0.75rem;
+}
+
+.track-texto-album {
+    font-size: 0.75rem;
+}
+
+.track-boton {
     background-color: transparent;
     min-width: 0;
     height: 2rem;
@@ -42,8 +42,7 @@
     border-radius: 1rem;
 }
 
-.separadorTrack {
+.track-separador {
     margin-top: 0;
     margin-bottom: 0;
 }
-

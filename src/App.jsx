@@ -590,7 +590,7 @@ function App() {
             <div className='app-resultados-y-playlist'>
                 <SearchResults textoResultados={textoResultados} setTextoResultados={setTextoResultados} listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />
-            </div>           
+            </div>
         </>
     )
 }
