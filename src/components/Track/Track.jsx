@@ -18,10 +18,13 @@ function Track({ index, musica, boton, setListaDeMusicas }) {
     return (
         <>
             <div className='seccionTrack'>
-                <div className='contenidoTrack'>
-                    <p className='textoTrack textoNombre'>{musica.name}</p>
-                    <p className='textoTrack textoaArtista'>{musica.artist}</p>
-                    <p className='textoTrack taxtoAlbum'>{musica.album}</p>
+                <div className='track-contenido'>
+                    <img className='track-cover-art' src={musica.coverArt} alt="" />
+                    <div className='track-contenido-texto'>
+                        <p className='textoTrack textoNombre'>{musica.name}</p>
+                        <p className='textoTrack textoaArtista'>{musica.artist}</p>
+                        <p className='textoTrack taxtoAlbum'>{musica.album}</p>
+                    </div>
                 </div>
                 <button className='botonAgregarTrack' onClick={handleAgregarOEliminar}>{boton}</button>
             </div>

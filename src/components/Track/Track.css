@@ -10,9 +10,20 @@
     font-size: 0.75rem;
 }
 
-.contenidoTrack {
+.track-contenido {
     flex-grow: 1;
+    display: flex;
+    flex-direction: row;
     max-width: calc(100% - 2rem);
+}
+
+.track-cover-art {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.track-contenido-texto {
+    flex-grow: 1;
 }
 
 .seccionTrack {
@@ -35,3 +46,4 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
