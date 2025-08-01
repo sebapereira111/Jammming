@@ -46,3 +46,25 @@
     margin-top: 0;
     margin-bottom: 0;
 }
+
+.track-dialog {
+    pointer-events: none;
+    padding: 0;
+    border: 0;
+    width: 300px;
+    position: fixed;
+    top: calc(50vh - 150px);
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 15px 25px, rgba(255, 255, 255, 0.25) 0px 5px 10px;
+}
+
+.track-cover-art-grande {
+    width: 18.75rem;
+    height: 18.75rem;
+}
+
+.track-dialog-text {
+    padding: 0.5rem;
+    p {
+        color: black;
+    }
+}
