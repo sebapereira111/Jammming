@@ -572,7 +572,7 @@ function App() {
     const [listaDeResultados, setListaDeResultados] = useState([]) // Lista de musicas devueltas por la API
     const [listaDeMusicas, setListaDeMusicas] = useState([]); // Lista de musicas del playlist creado
 
-    function busquedaDeMusicas(buscar) {
+    function busquedaDeMusicas(buscar, buscarType) {
         {/* Aca va el codigo para conectar a la API de Spotify */}
         
         {/* Para probar vamos a usar datos de prueba similares a respuesta de Spotify */}   

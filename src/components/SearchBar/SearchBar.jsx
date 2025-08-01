@@ -9,7 +9,7 @@ function SearchBar({ busquedaDeMusicas }) {
     // Al presionar Buscar llama a la funcion que realiza la busqueda
     function handleSubmit(e) {
         e.preventDefault();
-        busquedaDeMusicas(textoSearchbar);
+        busquedaDeMusicas(textoSearchbar, typeBusquedaSearchbar);
     }
 
     // Borrado del termino de busqueda con la X
