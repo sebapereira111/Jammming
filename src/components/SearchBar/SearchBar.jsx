@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './SearchBar.css'
 
-function SearchBar({ busquedaDeMusicas }) {
+function SearchBar({ busquedaDeMusicas, setListaDeResultados }) {
     const [textoSearchbar, settextoSearchbar] = useState("");
     // para elegir el type de busqueda, puede ser tracks, artists, albums o multi
     const [typeBusquedaSearchbar, setTypeBusquedaSearchbar] = useState("tracks");
@@ -9,7 +9,10 @@ function SearchBar({ busquedaDeMusicas }) {
     // Al presionar Buscar llama a la funcion que realiza la busqueda
     function handleSubmit(e) {
         e.preventDefault();
-        busquedaDeMusicas(textoSearchbar, typeBusquedaSearchbar);
+        // Llama la funcion que usa la API para obtener los resultados y recibe los datos ya formateados
+        const resultadoMusicas = busquedaDeMusicas(textoSearchbar, typeBusquedaSearchbar);
+        // Guarda esos resultados en la ListaDeResultados
+        setListaDeResultados(resultadoMusicas);
     }
 
     // Borrado del termino de busqueda con la X

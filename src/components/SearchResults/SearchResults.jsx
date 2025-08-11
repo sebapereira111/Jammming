@@ -7,11 +7,13 @@ setTextoResultados y setListaDeResultados son para poder borrar el temino de bus
 listaDeResultados es un array con los resultados
 setListaDeMusicas
 */
-function SearchResults({ textoResultados, setTextoResultados, listaDeResultados, setListaDeResultados, setListaDeMusicas }) {
+function SearchResults({ listaDeResultados, setListaDeResultados, setListaDeMusicas }) {
     /* Funcion que borra los terminos de busqueda */
     function handleBorrar() {
-        setTextoResultados("");
-        setListaDeResultados([]);
+        setListaDeResultados({
+            query: "",
+            tracks: []
+        });
     }
 
     return (
@@ -21,14 +23,14 @@ function SearchResults({ textoResultados, setTextoResultados, listaDeResultados,
                     {/* Primero se ve si hay algo en textoResultados 
                     para mostrar los resultados 
                     de lo contrario muestra instrucciones */}
-                    {textoResultados ? 
+                    {listaDeResultados.query ? 
                     <>
-                        <h2>Resultados para {textoResultados}</h2>
+                        <h2>Resultados para {listaDeResultados.query}</h2>
                         <button className='searchresults-boton-x' onClick={handleBorrar}>❌</button>
                     </>
                     : <p>Busquemos algo!</p>} {/* Las instrucciones se pueden mejorar */}
                 </div>
-                {listaDeResultados.map((item, index) => (<Track index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
+                {listaDeResultados.tracks.map((item, index) => (<Track index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
             </div>
         </>
     )
