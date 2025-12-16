@@ -1,0 +1,28 @@
+.login-container {
+    z-index: 2000;
+    height: 4rem;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.login-logo {
+    height: 3rem;
+    margin-right: 1rem;
+}
+
+.login-button {
+    height: 2rem;
+    margin-right: 1rem;
+}
+
+.cerrar-sesion-button {
+    height: 2rem;
+    min-width: 0;
+    width: 2rem;
+    margin-right: 1rem;
+}
+
