@@ -1,4 +1,4 @@
-const getUserId = async (tokens, setUser) => {
+async function getUserId(tokens, setUser){
     try {
         const response = await fetch('https://api.spotify.com/v1/me', {
             headers: {
@@ -16,6 +16,25 @@ const getUserId = async (tokens, setUser) => {
     } catch(error){
         console.error("Error fetching data from the Spotify API", error);
     }
-};
+}
 
-export const spotifyGetData = { getUserId };
+async function getTracks(buscar, tokens) {
+    try {
+        const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(buscar)}&limit=10`, {
+        headers: {
+            Authorization: `Bearer ${tokens.accessToken}`
+        }
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            const err = new Error('Error de getTracks');
+            err.status = response.status;
+            throw err;
+        }
+        return data;
+    } catch(error) {
+        throw error;
+    }
+}
+
+export const spotifyGetData = { getUserId, getTracks };

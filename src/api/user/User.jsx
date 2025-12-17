@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { spotifyAuthPKCE } from '../spotifyAuthPKCE'
 import './User.css'
 
-function User({ tokens, setTokens, isAuthenticated, setIsAuthenticated }) {
+function User({ setTokens, isAuthenticated, setIsAuthenticated }) {
     // Para evitar que se vuelva a solicitar el token mientras se esta esperando respuesta
     const [onCallback, setOnCallback] = useState(false);
     const [user, setUser] = useState('Iniciar Sesion');

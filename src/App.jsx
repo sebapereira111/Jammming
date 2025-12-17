@@ -25,7 +25,7 @@ function App() {
             <header>
                 <h1>Jammming</h1>
             </header>
-            <SearchBar busquedaDeMusicas={busquedaDeMusicas} setListaDeResultados={setListaDeResultados} />
+            <SearchBar busquedaDeMusicas={busquedaDeMusicas} setListaDeResultados={setListaDeResultados} tokens={tokens} />
             <div className='app-resultados-y-playlist'>
                 <SearchResults listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />

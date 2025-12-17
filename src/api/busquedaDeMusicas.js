@@ -1,3 +1,5 @@
+import { spotifyGetData } from "./spotifyGetData";
+
 // datosParaPrueba es una variable para prueba hasta que se tenga conexion al API
 const datosParaPrueba = {
   "query": "crazy+train",
@@ -544,7 +546,7 @@ const datosParaPrueba = {
 
 // Convierte los datos recibidos del archivo JSON ya parseados (como objeto)
 // y retorna un objeto simplificado con solo los datos que queremos
-function extraerMusicas(datos, buscar) {
+function extraerMusicasTEST(datos, buscar) {
     // Primero sacamos solo los tracks
     const soloTracks = datos.tracks.items;
     // Luego mapeamos a un nuevo array solo los datos que nos interesan
@@ -566,13 +568,45 @@ function extraerMusicas(datos, buscar) {
     return resultado;
 }
 
-function busquedaDeMusicas(buscar, buscarType) {
-    /* La funcion recibe el termino de busqueda (buscar) y el tipo (buscarType) */
+
+// Convierte los datos recibidos del archivo JSON ya parseados (como objeto)
+// y retorna un objeto simplificado con solo los datos que queremos
+function extraerMusicas(datos, buscar) {
+    // Primero sacamos solo los tracks
+    const soloTracks = datos.tracks.items;
+    // Luego mapeamos a un nuevo array solo los datos que nos interesan
+    // Cada elemento del array seran un objeto con id, name, artist, album y coverArt
+    const soloTracksResumido = soloTracks.map(dato => ({
+        id: dato.uri,
+        name: dato.name,
+        artist: dato.artists[0].name,
+        album: dato.album.name,
+        coverArt: dato.album.images[0].url
+    }));
+    // Creamos un objeto con los datos que nos interesan
+    // El termino de busqueda y un array de los tracks
+    const resultado = {
+        query: buscar,
+        tracks: soloTracksResumido,
+		next: datos.tracks.next,
+		previous: datos.tracks.previous,
+    }
+    // Devolvemos el array nuevo
+    return resultado;
+}
+
+async function busquedaDeMusicas(buscar, tokens) {
+	/* La funcion recibe el termino de busqueda (buscar) y los tokens */
     /* Se realiza la solicitud a la API de Spotify */
-    /* Cuando se tienen los resultados, hay que formatearlos */
-    const resultadoFormateado = extraerMusicas(datosParaPrueba, buscar);
-    /* Se retorna el resultado como un objeto */
-    return resultadoFormateado;
+	try {
+		const resultado = await spotifyGetData.getTracks(buscar, tokens);
+		/* Cuando se tienen los resultados, hay que formatearlos */
+		const resultadoFormateado = extraerMusicas(resultado, buscar);
+		/* Se retorna el resultado como un objeto */
+		return resultadoFormateado;
+	} catch (error) {
+		throw error;
+	}
 }
 
 export default busquedaDeMusicas
