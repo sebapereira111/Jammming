@@ -7,16 +7,20 @@ import busquedaDeMusicas from './api/busquedaDeMusicas'
 import User from './api/user/user'
 
 function App() {
+     // Lista de musicas devueltas por la API
     const [listaDeResultados, setListaDeResultados] = useState({
         query: "",
         tracks: []
-    }); // Lista de musicas devueltas por la API
-    const [listaDeMusicas, setListaDeMusicas] = useState([]); // Lista de musicas del playlist creado
+    });
+     // Lista de musicas del playlist creado
+    const [listaDeMusicas, setListaDeMusicas] = useState([]);
+    // Datos para realizar solicitud a la API de Spotify
     const [tokens, setTokens] = useState({
         accessToken: null,
         refreshToken: null,
         expiresAt: null,
     });
+    // 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     return (

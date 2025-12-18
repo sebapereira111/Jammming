@@ -1,6 +1,5 @@
 import { spotifyGetData } from "./spotifyGetData";
 
-
 // Restauracion de los tokens del localstorage
 function restoreFromStorage(setTokens, setIsAuthenticated, setUser) {
     const data = localStorage.getItem('spotify_auth_data');
@@ -241,3 +240,48 @@ async function refreshToken(tokens) {
 }
 
 export const spotifyAuthPKCE = { restoreFromStorage, authorizePKCE, handleCallback };
+
+
+
+
+
+
+/*
+VARIABLES IMPORTANTES
+> tokens >>> objeto {accessToken, refreshToken, expiresAt}
+> setOnCallback >>> bandera que bloquea duplicacion de funcion para manejar callback (de User)
+> setTokens >>> objeto tokens (de App)
+> setIsAuthenticated >>> bandera para saber si hay algun usuario logueado (de App)
+> setUser >>> nombre de usuario logueado
+> codeVerifier >>> se genera para la solicitud original a Spotify (guardado en localstorage)
+> state >>> se utiliza en la solicitud original a Spotify (guardado localstorage)
+> code >>> codigo de autorizacion que envia Spotify y se usa para pedir token
+
+> Funciones auxiliares
+    > generateRandomString
+    > sha256
+    > base64encode
+    > generateCodeChallenge
+> Funcion que restaura de storage >>> restoreFromStorage()
+    - No recibe nada
+    - Retorna un objeto tokens
+> Funcion que almacena en storage >>> saveToStorage(tokens)
+    - Recibe un ojeto tokens y guarda en el storage
+    - No retorna nada
+> Funcion que elimina datos de auth del storage >>> clearStorage()
+    - No recibe ni retorna nada
+    - Para desloguear o en caso de errores para elimiar los datos guardados
+> Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
+    - No recibe ni retorna nada
+> Funcion para manejar el callback de Spotify >>> handleCallback()
+    - Recibe setOnCallback para bloquear su duplicacion, setTokens, setIsAuthenticated y setUser
+    - Retorna nada
+> Funcion para conseguir los tokens >>> getToken()
+    - Recibe code y codeVerifier
+    - Retorna tokens
+> Funcion para refrescar los tokens >>> refreshTokens()
+    - Recibe tokens
+    - Retorna tokens
+> Funcion >>> refreshToken()
+
+*/
