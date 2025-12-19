@@ -11,7 +11,7 @@ function restoreFromStorage(setTokens, setUser) {
                 refreshToken: parsed.refreshToken,
                 expiresAt: parsed.expiresAt,
             });
-            spotifyGetData.getUserId(parsed, setUser);
+            setUser(spotifyGetData.getUserId(parsed, setTokens));
         } catch (error) {
             console.error("Error en restoreFromStorage:", error);
             localStorage.removeItem("spotify_auth_data");
@@ -135,7 +135,7 @@ async function handleCallback(setOnCallback, setTokens, setUser) {
         setTokens(newTokens);
 
         // Solicitamos el nombre de usuario y lo guardamos
-        spotifyGetData.getUserId(newTokens, setUser);
+        setUser(spotifyGetData.getUserId(newTokens, setTokens));
 
         // Desbloqueamos la ejecucion del callback antes de salir
         setOnCallback(false);
@@ -207,7 +207,14 @@ async function getToken(code, codeVerifier) {
     }
 }
 
-async function refreshToken(oldTokens) {
+// Refresca los tokens si ya vencio
+async function refreshToken(oldTokens, setTokens) {
+    // Primero vemos si nuestros tokens han expirado (con 5 minutos de margen)
+    // Si no han expirado retornamos
+    if (oldTokens.expiresAt > (Date.now() - 300000)) {
+        return ;
+    }
+
     // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
 
@@ -247,10 +254,11 @@ async function refreshToken(oldTokens) {
         // Se actualiza en almacenamiento local
         localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
 
-        // Se retornan los tokens refrescados
-        return tokens;
+        // Se guardan los nuevos tokens
+        setTokens(tokens)
     } catch(error) {
-        console.error(`Error en refreshToken: `, error);
+        console.error("Error en refreshToken", error);
+        throw error;
     }
 }
 
@@ -287,8 +295,7 @@ VARIABLES IMPORTANTES
     - Recibe code y codeVerifier
     - Retorna tokens
 > Funcion para refrescar los tokens >>> refreshTokens()
-    - Recibe tokens viejos
-    - Retorna tokens refrescado
-> Funcion >>> refreshToken()
+    - Recibe tokens viejos y setTokens
+    - Retorna nada
 
 */
