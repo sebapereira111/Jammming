@@ -20,12 +20,10 @@ function App() {
         refreshToken: null,
         expiresAt: null,
     });
-    // 
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     return (
         <>
-            <User tokens={tokens} setTokens={setTokens} isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+            <User setTokens={setTokens} />
             <header>
                 <h1>Jammming</h1>
             </header>
