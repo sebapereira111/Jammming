@@ -3,27 +3,33 @@ import { spotifyAuthPKCE } from '../spotifyAuthPKCE'
 import './User.css'
 
 function User({ setTokens }) {
-    // Para evitar que se vuelva a solicitar el token mientras se esta esperando respuesta
-    const onCallback = useRef(false);
+    // Para correr una sola vez el restoreFromStorage (por el strictmode)
+    const runRestore = useRef(true);
+    // Para correr solo una vez handleCallback (por el strictmode)
+    const runCallback = useRef(true);
     // Guarda el usuario logueado
     const [user, setUser] = useState("");
 
     // Para el primer montaje, restaura datos de local storage
     useEffect(() => {
-        const tokens = spotifyAuthPKCE.restoreFromStorage(setTokens, setUser);
+        if (runRestore.current) {
+            runRestore.current = false;
+            spotifyAuthPKCE.restoreFromStorage(setTokens, setUser);
+        }
+    }, []);
+
+    // Gestiona el callback de Spotify para continuar el inicio de sesion
+    useEffect(() => {
+        if (runCallback.current) {
+            runCallback.current = false;
+            spotifyAuthPKCE.handleCallback(setTokens, setUser);
+        }
     }, []);
 
     // Se comunica son Spotify para iniciar sesion
     function handleLogin() {
         spotifyAuthPKCE.authorizePKCE();
     }
-
-    // Gestiona el callback de Spotify para continuar el inicio de sesion
-    useEffect(() => {
-        if (!onCallback.current) {
-            spotifyAuthPKCE.handleCallback(onCallback, setTokens, setUser);
-        }
-    }, []);
 
     // Cierra sesion de usuario localmente
     function handleCerrarSesion() {

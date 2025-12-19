@@ -1,17 +1,19 @@
 import { spotifyGetData } from "./spotifyGetData";
 
 // Restauracion de los tokens del localstorage
-function restoreFromStorage(setTokens, setUser) {
+async function restoreFromStorage(setTokens, setUser) {
     const data = localStorage.getItem("spotify_auth_data");
     if (data) {
         try {
-            const parsed = JSON.parse(data);
-            setTokens({
-                accessToken: parsed.accessToken,
-                refreshToken: parsed.refreshToken,
-                expiresAt: parsed.expiresAt,
-            });
-            setUser(spotifyGetData.getUserId(parsed, setTokens));
+            const parse = JSON.parse(data);
+            const tokens = {
+                accessToken: parse.accessToken,
+                refreshToken: parse.refreshToken,
+                expiresAt: parse.expiresAt,
+            };
+            setTokens(tokens);
+            const userId = await spotifyGetData.getUserId(tokens, setTokens);
+            setUser(userId);
         } catch (error) {
             console.error("Error en restoreFromStorage:", error);
             localStorage.removeItem("spotify_auth_data");
@@ -90,7 +92,7 @@ async function authorizePKCE() {
 }
 
 // Gestionamos el callback y solicitamos los tokens
-async function handleCallback(setOnCallback, setTokens, setUser) {
+async function handleCallback(setTokens, setUser) {
     // Extraemos los parametros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
@@ -114,9 +116,6 @@ async function handleCallback(setOnCallback, setTokens, setUser) {
             throw new Error("Parametro state no coincide, posible problema de seguridad");
         }
 
-        // Bloqueamos la ejecucion del callback mientras esperamos a conseguir el token
-        setOnCallback(true);
-
         // Recuperamos el code verifier e intercambiamos el code por los tokens
         const codeVerifier = localStorage.getItem("spotify_code_verifier");
         if (!codeVerifier) {
@@ -136,9 +135,6 @@ async function handleCallback(setOnCallback, setTokens, setUser) {
 
         // Solicitamos el nombre de usuario y lo guardamos
         setUser(spotifyGetData.getUserId(newTokens, setTokens));
-
-        // Desbloqueamos la ejecucion del callback antes de salir
-        setOnCallback(false);
     } catch(error) {
         console.error("Error en handleCallback:", error.message);
         localStorage.removeItem("spotify_code_verifier");
@@ -211,9 +207,9 @@ async function getToken(code, codeVerifier) {
 async function refreshToken(oldTokens, setTokens) {
     // Primero vemos si nuestros tokens han expirado (con 5 minutos de margen)
     // Si no han expirado retornamos
-    if (oldTokens.expiresAt > (Date.now() - 300000)) {
-        return ;
-    }
+//    if (oldTokens.expiresAt > (Date.now() - 300000)) {
+//        return oldTokens;
+//    }
 
     // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -255,7 +251,10 @@ async function refreshToken(oldTokens, setTokens) {
         localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
 
         // Se guardan los nuevos tokens
-        setTokens(tokens)
+        setTokens(tokens);
+
+        // Se retornan los nuevos tokens para su uso inmediato
+        return tokens;
     } catch(error) {
         console.error("Error en refreshToken", error);
         throw error;
@@ -289,13 +288,13 @@ VARIABLES IMPORTANTES
 > Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
     - No recibe ni retorna nada
 > Funcion para manejar el callback de Spotify >>> handleCallback()
-    - Recibe setOnCallback para bloquear su duplicacion, setTokens y setUser
+    - Recibe setTokens y setUser
     - Retorna nada
 > Funcion para conseguir los tokens >>> getToken()
     - Recibe code y codeVerifier
     - Retorna tokens
 > Funcion para refrescar los tokens >>> refreshTokens()
     - Recibe tokens viejos y setTokens
-    - Retorna nada
+    - Retorna tokens (refrescados o los viejos)
 
 */
