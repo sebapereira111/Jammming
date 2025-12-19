@@ -1,8 +1,8 @@
 import { spotifyGetData } from "./spotifyGetData";
 
 // Restauracion de los tokens del localstorage
-function restoreFromStorage(setTokens, setIsAuthenticated, setUser) {
-    const data = localStorage.getItem('spotify_auth_data');
+function restoreFromStorage(setTokens, setUser) {
+    const data = localStorage.getItem("spotify_auth_data");
     if (data) {
         try {
             const parsed = JSON.parse(data);
@@ -10,12 +10,11 @@ function restoreFromStorage(setTokens, setIsAuthenticated, setUser) {
                 accessToken: parsed.accessToken,
                 refreshToken: parsed.refreshToken,
                 expiresAt: parsed.expiresAt,
-            })
-            setIsAuthenticated(true);
+            });
             spotifyGetData.getUserId(parsed, setUser);
         } catch (error) {
-            console.error('Error parsing stored auth data:', error);
-            localStorage.removeItem('spotify_auth_data');
+            console.error("Error en restoreFromStorage:", error);
+            localStorage.removeItem("spotify_auth_data");
         }
     }
 }
@@ -40,15 +39,14 @@ const base64encode = (input) => {
     return btoa(String.fromCharCode(...new Uint8Array(input))).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
 }
 
-// Generate PKCE code challenge
-// Genera el code challenge usando las funciones auxiliares
+// Genera el code challenge PKCE usando las funciones auxiliares
 async function generateCodeChallenge() {
     const codeVerifier = generateRandomString(64);
     const hashed = await sha256(codeVerifier);
     const codeChallenge = base64encode(hashed);
     
-    // Store code verifier for later use
-    localStorage.setItem('spotify_code_verifier', codeVerifier);
+    // Almacenamos el codeVerifier para usarlo despues
+    localStorage.setItem("spotify_code_verifier", codeVerifier);
     
     return codeChallenge;
 }
@@ -58,9 +56,9 @@ async function authorizePKCE() {
     // Generamos el code challenge
     const codeChallenge = await generateCodeChallenge();
 
-    // Generamos el state (recomendado) y lo almacenamos 
+    // Generamos el state (recomendado) y lo almacenamos para uso posterior
     const state = generateRandomString(16);
-    localStorage.setItem('spotify_auth_state', state);
+    localStorage.setItem("spotify_auth_state", state);
 
     // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -68,10 +66,10 @@ async function authorizePKCE() {
 
     // El scope que vamos a solicitar
     const scopes = [
-        'playlist-modify-public',
-        'playlist-modify-private',
-        'user-read-private',
-        'user-read-email',
+        "playlist-modify-public",
+        "playlist-modify-private",
+        "user-read-private",
+        "user-read-email",
     ];
 
     // URL y parametros
@@ -91,19 +89,18 @@ async function authorizePKCE() {
     window.location.href = authUrl.toString();
 }
 
-// Handle the callback and exchange code for tokens
-async function handleCallback(setOnCallback, setTokens, setIsAuthenticated, setUser) {
+// Gestionamos el callback y solicitamos los tokens
+async function handleCallback(setOnCallback, setTokens, setUser) {
     // Extraemos los parametros de la URL
     const urlParams = new URLSearchParams(window.location.search);
-    const code = urlParams.get('code');
-    const state = urlParams.get('state');
-    const error = urlParams.get('error');
+    const code = urlParams.get("code");
+    const state = urlParams.get("state");
+    const error = urlParams.get("error");
 
     try {
         // Si tenemos algun error en el callback (en los parametros de la URL)
         if (error) {
-            console.error('Authorization error:', error);
-            throw new Error(`Authorization failed: ${error}`);
+            throw new Error(`Error de autorizacion: ${error}`);
         }
 
         // Si no hay codigo no es un callback
@@ -112,48 +109,52 @@ async function handleCallback(setOnCallback, setTokens, setIsAuthenticated, setU
         }
 
         // Verificamos el state por seguridad
-        const storedState = localStorage.getItem('spotify_auth_state');
+        const storedState = localStorage.getItem("spotify_auth_state");
         if (state !== storedState) {
-            throw new Error('State parameter mismatch - potential security issue');
+            throw new Error("Parametro state no coincide, posible problema de seguridad");
         }
 
         // Bloqueamos la ejecucion del callback mientras esperamos a conseguir el token
         setOnCallback(true);
+
         // Recuperamos el code verifier e intercambiamos el code por los tokens
-        const codeVerifier = localStorage.getItem('spotify_code_verifier');
+        const codeVerifier = localStorage.getItem("spotify_code_verifier");
         if (!codeVerifier) {
-            throw new Error('Code verifier not found');
+            throw new Error("No se encuentra el codeVerifier");
         }
-        const tokens = await getToken(code, codeVerifier);
+        const newTokens = await getToken(code, codeVerifier);
         
         // Borramos valores guardados usados en el callback
-        localStorage.removeItem('spotify_code_verifier');
-        localStorage.removeItem('spotify_auth_state');
+        localStorage.removeItem("spotify_code_verifier");
+        localStorage.removeItem("spotify_auth_state");
         
         // Limpiamos la URL
         window.history.replaceState({}, document.title, window.location.pathname);
 
-        setTokens(tokens);
+        // Guardamos los valores recibidos en la variable tokens
+        setTokens(newTokens);
 
-        setIsAuthenticated(true);
+        // Solicitamos el nombre de usuario y lo guardamos
+        spotifyGetData.getUserId(newTokens, setUser);
 
-        spotifyGetData.getUserId(tokens, setUser);
-
+        // Desbloqueamos la ejecucion del callback antes de salir
         setOnCallback(false);
-
-        return true;
     } catch(error) {
-        console.log("Error capturado:", error.message);
+        console.error("Error en handleCallback:", error.message);
+        localStorage.removeItem("spotify_code_verifier");
+        localStorage.removeItem("spotify_auth_state");
+        window.history.replaceState({}, document.title, window.location.pathname);
         setTokens({
                 accessToken: null,
                 refreshToken: null,
                 expiresAt: null,
             });
-        setIsAuthenticated(false);
-        setUser('Iniciar Sesion');
+        setUser("");
+        setOnCallback(false);
     }
 }
 
+// Solicitud de token con el code recibido
 async function getToken(code, codeVerifier) {
     // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
@@ -177,21 +178,21 @@ async function getToken(code, codeVerifier) {
 
     try {
         // Solicitamos los tokens
-        const body = await fetch(url, payload);
+        const response = await fetch(url, payload);
 
         // Si la respuesta da error
-        if (!body.ok) {
-            const errorData = await body.json();
-            throw new Error(`Token exchange failed: ${errorData.error_description || errorData.error}`);
+        if (!response.ok) {
+            const errorBody = await response.json().catch(() => null);
+            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
         }
         
-        const response = await body.json();
+        const responseBody = await response.json();
 
         // Cargamos los valores en un objeto
         const tokens = {
-            accessToken: response.access_token,
-            refreshToken: response.refresh_token,
-            expiresAt: Date.now() + (response.expires_in * 1000),
+            accessToken: responseBody.access_token,
+            refreshToken: responseBody.refresh_token,
+            expiresAt: Date.now() + (responseBody.expires_in * 1000),
         }
 
         // Se almacenan para uso posterior
@@ -201,14 +202,16 @@ async function getToken(code, codeVerifier) {
         return tokens;
     } catch (error) {
         // Si el fetch da error
-        console.error('Error exchanging code for tokens:', error);
+        console.error("Error en getToken", error);
         throw error;
     }
 }
 
-async function refreshToken(tokens) {
+async function refreshToken(oldTokens) {
+    // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
 
+    // Los datos para la solicitud
     const url = "https://accounts.spotify.com/api/token";
     const payload = {
         method: 'POST',
@@ -217,33 +220,41 @@ async function refreshToken(tokens) {
         },
         body: new URLSearchParams({
             grant_type: 'refresh_token',
-            refresh_token: tokens.refreshToken,
+            refresh_token: oldTokens.refreshToken,
             client_id: clientId
         }),
     }
 
     try {
-        
+        // Solicitamos refrescar los token
+        const response = await fetch(url, payload);
+
+        // Si la respuesta da error
+        if (!response.ok) {
+            const errorBody = await response.json().catch(() => null);
+            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+        }
+
+        const responseBody = await response.json();
+
+        // Cargamos los valores en un objeto
+        const tokens = {
+            accessToken: responseBody.access_token,
+            refreshToken: responseBody.refresh_token ? responseBody.refresh_token : oldTokens.refresh_token,
+            expiresAt: Date.now() + (responseBody.expires_in * 1000),
+        }
+
+        // Se actualiza en almacenamiento local
+        localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
+
+        // Se retornan los tokens refrescados
+        return tokens;
     } catch(error) {
-
-    }
-
-    const body = await fetch(url, payload);
-    const response = await body.json();
-
-
-
-    localStorage.setItem('access_token', response.access_token);
-    if (response.refresh_token) {
-        localStorage.setItem('refresh_token', response.refresh_token);
+        console.error(`Error en refreshToken: `, error);
     }
 }
 
-export const spotifyAuthPKCE = { restoreFromStorage, authorizePKCE, handleCallback };
-
-
-
-
+export const spotifyAuthPKCE = { restoreFromStorage, authorizePKCE, handleCallback, refreshToken };
 
 
 /*
@@ -251,7 +262,6 @@ VARIABLES IMPORTANTES
 > tokens >>> objeto {accessToken, refreshToken, expiresAt}
 > setOnCallback >>> bandera que bloquea duplicacion de funcion para manejar callback (de User)
 > setTokens >>> objeto tokens (de App)
-> setIsAuthenticated >>> bandera para saber si hay algun usuario logueado (de App)
 > setUser >>> nombre de usuario logueado
 > codeVerifier >>> se genera para la solicitud original a Spotify (guardado en localstorage)
 > state >>> se utiliza en la solicitud original a Spotify (guardado localstorage)
@@ -263,25 +273,22 @@ VARIABLES IMPORTANTES
     > base64encode
     > generateCodeChallenge
 > Funcion que restaura de storage >>> restoreFromStorage()
-    - No recibe nada
-    - Retorna un objeto tokens
+    - Recibe setTokens y setUser
+    - Retorna nada
 > Funcion que almacena en storage >>> saveToStorage(tokens)
     - Recibe un ojeto tokens y guarda en el storage
     - No retorna nada
-> Funcion que elimina datos de auth del storage >>> clearStorage()
-    - No recibe ni retorna nada
-    - Para desloguear o en caso de errores para elimiar los datos guardados
 > Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
     - No recibe ni retorna nada
 > Funcion para manejar el callback de Spotify >>> handleCallback()
-    - Recibe setOnCallback para bloquear su duplicacion, setTokens, setIsAuthenticated y setUser
+    - Recibe setOnCallback para bloquear su duplicacion, setTokens y setUser
     - Retorna nada
 > Funcion para conseguir los tokens >>> getToken()
     - Recibe code y codeVerifier
     - Retorna tokens
 > Funcion para refrescar los tokens >>> refreshTokens()
-    - Recibe tokens
-    - Retorna tokens
+    - Recibe tokens viejos
+    - Retorna tokens refrescado
 > Funcion >>> refreshToken()
 
 */
