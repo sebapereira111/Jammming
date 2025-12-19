@@ -1,5 +1,12 @@
-async function getUserId(tokens, setUser){
+import { spotifyAuthPKCE } from "./spotifyAuthPKCE";
+
+// Pedimo a Spotify el id de usuario
+async function getUserId(tokens, setTokens){
     try {
+        // Primero refrescamos nuestros token
+        spotifyAuthPKCE.refreshToken(tokens, setTokens);
+
+        // Solicitamos el id a Spotify
         const response = await fetch('https://api.spotify.com/v1/me', {
             headers: {
                 Authorization: `Bearer ${tokens.accessToken}`
@@ -7,14 +14,15 @@ async function getUserId(tokens, setUser){
         });
 
         if(!response.ok){
-            throw new Error("Failed to fetch data from the Spotify API");
+            const errorBody = await response.json().catch(() => null);
+            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
         }
 
         const data = await response.json();
-        console.log(data)
-        setUser(data.id);
+        return(data.id);
     } catch(error){
-        console.error("Error fetching data from the Spotify API", error);
+        console.error("Error en getUserId", error);
+        throw error;
     }
 }
 
@@ -38,3 +46,9 @@ async function getTracks(buscar, tokens) {
 }
 
 export const spotifyGetData = { getUserId, getTracks };
+
+/*
+> Funcion para obtener el usuario >>> getUserId()
+    - Recibe tokens y setTokens
+    - Retorna userId
+*/
