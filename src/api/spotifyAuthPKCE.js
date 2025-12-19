@@ -207,9 +207,9 @@ async function getToken(code, codeVerifier) {
 async function refreshToken(oldTokens, setTokens) {
     // Primero vemos si nuestros tokens han expirado (con 5 minutos de margen)
     // Si no han expirado retornamos
-//    if (oldTokens.expiresAt > (Date.now() - 300000)) {
-//        return oldTokens;
-//    }
+    if (oldTokens.expiresAt > (Date.now() - 300000)) {
+        return oldTokens;
+    }
 
     // Los datos locales que vamos a usar
     const clientId = import.meta.env.VITE_CLIENT_ID;
