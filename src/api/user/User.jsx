@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { spotifyAuthPKCE } from '../spotifyAuthPKCE'
 import './User.css'
 
 function User({ setTokens }) {
     // Para evitar que se vuelva a solicitar el token mientras se esta esperando respuesta
-    const [onCallback, setOnCallback] = useState(false);
+    const onCallback = useRef(false);
     // Guarda el usuario logueado
     const [user, setUser] = useState("");
 
     // Para el primer montaje, restaura datos de local storage
     useEffect(() => {
         const tokens = spotifyAuthPKCE.restoreFromStorage(setTokens, setUser);
-    }, [])
+    }, []);
 
     // Se comunica son Spotify para iniciar sesion
     function handleLogin() {
@@ -19,9 +19,11 @@ function User({ setTokens }) {
     }
 
     // Gestiona el callback de Spotify para continuar el inicio de sesion
-    if (!onCallback) {
-        spotifyAuthPKCE.handleCallback(setOnCallback, setTokens, setUser);
-    }
+    useEffect(() => {
+        if (!onCallback.current) {
+            spotifyAuthPKCE.handleCallback(onCallback, setTokens, setUser);
+        }
+    }, []);
 
     // Cierra sesion de usuario localmente
     function handleCerrarSesion() {
