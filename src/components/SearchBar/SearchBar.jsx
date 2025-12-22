@@ -17,16 +17,13 @@ function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
         // Luego Extraemos las musicas
         // Luego Guardamos esas musicas en setListaDeResultados
         spotifyGetData.getTracks(url, tokens, setTokens).then(
-            spotifyData => {
-                return spotifyFormatData.extraerMusicas(spotifyData);
-            }
+            spotifyData => spotifyFormatData.extraerMusicas(spotifyData)
         ).then (
-            extractedMusics => {
-                setListaDeResultados(extractedMusics);
-            }
+            extractedMusics => setListaDeResultados(extractedMusics)
         ).catch(
             error => {
                 console.error("Error en SearchBar - handleSubmit", error);
+                alert("Error al buscar musicas de Spotify");
             }
         );
     }
