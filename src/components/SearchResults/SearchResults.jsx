@@ -34,7 +34,7 @@ function SearchResults({ listaDeResultados, setListaDeResultados, setListaDeMusi
                     </>
                     : <p>Busquemos algo!</p>} {/* Las instrucciones se pueden mejorar */}
                 </div>
-                {listaDeResultados.tracks.map((item, index) => (<Track index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
+                {listaDeResultados.tracks.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}
             </div>
         </>
     )

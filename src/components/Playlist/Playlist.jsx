@@ -44,7 +44,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas }) {
                         <button type='button' className='playlist-boton-x-nombre' disabled={!nombrePlaylist} onClick={handleBorrarNombrePlaylist}>❌</button>
                     </div>
                 </form>
-                {listaDeMusicas.map((item, index) => (<Track index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
+                {listaDeMusicas.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
                 <div className='playlist-botones-inferiores'>
                     <button disabled={!listaDeMusicas.length} onClick={handleBorrarPlaylist} >Borrar playlist</button>
                     <button disabled={!listaDeMusicas.length} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
