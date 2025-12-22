@@ -9,7 +9,10 @@ function App() {
      // Lista de musicas devueltas por la API
     const [listaDeResultados, setListaDeResultados] = useState({
         query: "",
-        tracks: []
+        tracks: [],
+        previous: false,
+        next: false
+
     });
      // Lista de musicas del playlist creado
     const [listaDeMusicas, setListaDeMusicas] = useState([]);
@@ -26,7 +29,7 @@ function App() {
             <header>
                 <h1>Jammming</h1>
             </header>
-            <SearchBar setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
+            <SearchBar listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
             <div className='app-resultados-y-playlist'>
                 <SearchResults listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />

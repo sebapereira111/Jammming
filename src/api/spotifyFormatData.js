@@ -23,8 +23,8 @@ async function extraerMusicas(datos) {
     const resultado = {
         query: buscar,
         tracks: soloTracksResumido,
-		next: datos.tracks.next ? datos.tracks.next : false,
-		previous: datos.tracks.previous ? datos.tracks.previous : false,
+        previous: datos.tracks.previous ? datos.tracks.previous : false,
+		next: datos.tracks.next ? datos.tracks.next : false
     }
 
     // Devolvemos el objeto nuevo
