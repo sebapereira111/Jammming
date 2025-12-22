@@ -3,7 +3,7 @@ import './SearchBar.css'
 import { spotifyGetData } from '../../api/spotifyGetData';
 import { spotifyFormatData } from '../../api/spotifyFormatData';
 
-function SearchBar({ listaDeResultados, setListaDeResultados, tokens, setTokens }) {
+function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
     const [textoSearchbar, settextoSearchbar] = useState("");
 
     // Al presionar Buscar llama a la funcion que realiza la busqueda
@@ -44,7 +44,7 @@ function SearchBar({ listaDeResultados, setListaDeResultados, tokens, setTokens 
     // Para el offset al llamar a la API
     async function handleOffset(e) {
         // Definimos nuestra url
-        const url = listaDeResultados[e.target.id];
+        const url = offset[e.target.id];
 
         // Primero solicitamos las musicas a Spotify
         // Luego Extraemos las musicas
@@ -81,8 +81,8 @@ function SearchBar({ listaDeResultados, setListaDeResultados, tokens, setTokens 
                 </div>
                 <button type="submit" disabled={!textoSearchbar} >Buscar</button>
                  <div>
-                    <button id="previous" onClick={handleOffset} type='button' disabled={!listaDeResultados.previous} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&lt;</button>
-                    <button id="next" onClick={handleOffset} type='button' disabled={!listaDeResultados.next} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&gt;</button>
+                    <button id="previous" onClick={handleOffset} type='button' disabled={!offset.previous} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&lt;</button>
+                    <button id="next" onClick={handleOffset} type='button' disabled={!offset.next} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&gt;</button>
                  </div>
             </form>
         </>

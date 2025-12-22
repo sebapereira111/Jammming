@@ -12,7 +12,11 @@ function SearchResults({ listaDeResultados, setListaDeResultados, setListaDeMusi
     function handleBorrar() {
         setListaDeResultados({
             query: "",
-            tracks: []
+            tracks: [],
+            offset : {
+                previous: false,
+                next: false
+            }
         });
     }
 
