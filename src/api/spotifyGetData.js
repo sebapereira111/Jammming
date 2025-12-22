@@ -48,7 +48,7 @@ async function getTracks(url, tokens, setTokens) {
         const data = await response.json();
         return data;
     } catch(error) {
-        console.error("Error en getOffset", error);
+        console.error("Error en getTracks", error);
         throw error;
     }
 }
@@ -60,9 +60,7 @@ export const spotifyGetData = { getUserId, getTracks };
     - Recibe tokens y setTokens
     - Retorna userId
 > Funcion para pedir tracks >>> getTracks()
-    - Recibe termino de busqueda, tokens y setTokens
+    - Recibe url de busqueda, tokens y setTokens
     - Retorna datos de tracks (como envio Spotify pero ya un objeto(parseado))
-> Funcion para pedir tracks offset >>> getOffset()
-    - Recibe url, tokens y setTokens
-    - Retorna datos de tracks (como envio Spotify pero ya un objeto(parseado))
+
 */
