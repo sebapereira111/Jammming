@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import './Playlist.css'
 import Track from '../Track/Track'
+import { spotifyPutData } from '../../api/spotifyPutData';
 
-function Playlist({ listaDeMusicas, setListaDeMusicas }) {
+function Playlist({ listaDeMusicas, setListaDeMusicas, tokens, setTokens }) {
     /* Variable para el nombre de la playlist */
     const [nombrePlaylist, setNombrePlaylist] = useState("");
 
@@ -23,8 +24,19 @@ function Playlist({ listaDeMusicas, setListaDeMusicas }) {
 
     /* Funcion para guardar la playlist a Spotify
     Temporalmente solo emite una alerta */
-    function handleGuardarASpotify() {
-        alert("Guardado a Spotify");
+    async function handleGuardarASpotify() {
+        // Priemero creamos la playlist
+        // Luego Guardamos los tracks
+        spotifyPutData.createPlaylist(nombrePlaylist, tokens, setTokens).then(
+            playlistId => spotifyPutData.addToPlaylist(playlistId, listaDeMusicas, tokens, setTokens)
+        ).then(
+            () => alert("Guardado en Spotify OK")
+        ).catch(
+            error => {
+                console.error("Error en handleGuardarASpotify", error);
+                alert("Error al guardar en Spotify");
+            }   
+        );
     }
 
     return (
@@ -47,7 +59,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas }) {
                 {listaDeMusicas.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
                 <div className='playlist-botones-inferiores'>
                     <button disabled={!listaDeMusicas.length} onClick={handleBorrarPlaylist} >Borrar playlist</button>
-                    <button disabled={!listaDeMusicas.length} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
+                    <button disabled={!listaDeMusicas.length || !nombrePlaylist} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
                 </div>
             </div>
         </>

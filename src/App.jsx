@@ -33,7 +33,7 @@ function App() {
             <SearchBar offset={listaDeResultados.offset} setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
             <div className='app-resultados-y-playlist'>
                 <SearchResults listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
-                <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} />
+                <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} tokens={tokens} setTokens={setTokens} />
             </div>
         </>
     )
