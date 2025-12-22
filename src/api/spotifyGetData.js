@@ -27,36 +27,7 @@ async function getUserId(tokens, setTokens){
     }
 }
 
-async function getTracks(buscar, tokens, setTokens) {
-    // Definimos que se pidan 10 resultados a Spotify
-    const cant = 10;
-
-    try {
-        // Primero refrescamos nuestros token
-        const freshTokens = await spotifyAuthPKCE.refreshToken(tokens, setTokens);
-
-        // Solicitamos las musicas a Spotify de acuerdo a el termino de busqueda
-        const response = await fetch(`https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(buscar)}&limit=${encodeURIComponent(String(cant))}&locale=es_LA`, {
-        headers: {
-            Authorization: `Bearer ${freshTokens.accessToken}`
-        }
-        });
-
-        // Si la respuesta es error (fuera de 200)
-        if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
-        }
-
-        const data = await response.json();
-        return data;
-    } catch(error) {
-        console.error("Error en getTracks", error);
-        throw error;
-    }
-}
-
-async function getOffset(url, tokens, setTokens) {
+async function getTracks(url, tokens, setTokens) {
     try {
         // Primero refrescamos nuestros token
         const freshTokens = await spotifyAuthPKCE.refreshToken(tokens, setTokens);
@@ -82,7 +53,7 @@ async function getOffset(url, tokens, setTokens) {
     }
 }
 
-export const spotifyGetData = { getUserId, getTracks, getOffset };
+export const spotifyGetData = { getUserId, getTracks };
 
 /*
 > Funcion para obtener el usuario >>> getUserId()

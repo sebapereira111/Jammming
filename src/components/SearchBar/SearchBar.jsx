@@ -11,29 +11,17 @@ function SearchBar({ setListaDeResultados, tokens, setTokens }) {
     });
 
     // Al presionar Buscar llama a la funcion que realiza la busqueda
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        // Primero solicitamos las musicas a Spotify
-        // Luego Extraemos las musicas
-        // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getTracks(textoSearchbar, tokens, setTokens).then(
-            spotifyData => {
-                return spotifyFormatData.extraerMusicas(spotifyData);
-            }
-        ).then (
-            extractedMusics => {
-                setListaDeResultados(extractedMusics);
-                setOffset({
-                    next : extractedMusics.next,
-                    previous : extractedMusics.previous
-                })
-            }
-        ).catch(
-            error => {
-                console.error("Error en SearchBar", error);
-            }
-        );
+        const limit = 10;
+        const url = `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(textoSearchbar)}&limit=${encodeURIComponent(String(limit))}&locale=es_LA`;
+        
+        try {
+            await getAndSaveData(url);
+        } catch(error) {
+            console.error("Error en SearchBar - handleSubmit", error);
+        };
     }
 
     // Borrado del termino de busqueda con la X
@@ -47,14 +35,22 @@ function SearchBar({ setListaDeResultados, tokens, setTokens }) {
     }
 
     // Para el offset al llamar a la API
-    function handleOffset(e) {
+    async function handleOffset(e) {
         // Definimos nuestra url
         const url = offset[e.target.id];
 
+        try {
+            await getAndSaveData(url);
+        } catch(error) {
+            console.error("Error en SearchBar - handleOffset", error);
+        }
+    }
+
+    async function getAndSaveData(url) {
         // Primero solicitamos las musicas a Spotify
         // Luego Extraemos las musicas
         // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getOffset(url, tokens, setTokens).then(
+        spotifyGetData.getTracks(url, tokens, setTokens).then(
             spotifyData => {
                 return spotifyFormatData.extraerMusicas(spotifyData);
             }
@@ -68,11 +64,11 @@ function SearchBar({ setListaDeResultados, tokens, setTokens }) {
             }
         ).catch(
             error => {
-                console.error("Error en SearchBar", error);
+                throw error;
             }
         );
     }
-    
+
     return (
         <>
             <form className='searchbar-principal' onSubmit={handleSubmit}>
