@@ -13,10 +13,12 @@ function User({ setTokens }) {
 
     // Para el primer montaje, restaura datos de local storage
     useEffect(() => {
-        if (runRestore.current) {
-            runRestore.current = false;
-            spotifyAuthPKCE.restoreFromStorage(setTokens, setUser);
-        }
+        if (import.meta.env.DEV) {
+            if (runRestore.current) {
+                runRestore.current = false;
+                spotifyAuthPKCE.restoreFromStorage(setTokens, setUser);
+            }
+        } 
     }, []);
 
     // Gestiona el callback de Spotify para continuar el inicio de sesion
