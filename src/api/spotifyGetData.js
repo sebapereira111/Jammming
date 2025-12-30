@@ -1,13 +1,14 @@
 import { spotifyAuthPKCE } from "./spotifyAuthPKCE";
 
-// Pedimo a Spotify el id de usuario
+// Peticion de usuario a Spotify
 async function getUserId(tokens, setTokens){
     try {
         // Primero refrescamos nuestros token
         const freshTokens = await spotifyAuthPKCE.refreshToken(tokens, setTokens);
 
         // Solicitamos el id a Spotify
-        const response = await fetch('https://api.spotify.com/v1/me', {
+        const url = import.meta.env.VITE_SPOTIFY_API_ENDPOINT + "/me";
+        const response = await fetch(url, {
             headers: {
                 Authorization: `Bearer ${freshTokens.accessToken}`
             }
@@ -15,10 +16,11 @@ async function getUserId(tokens, setTokens){
 
         // Si la respuesta es error (fuera de 200)
         if(!response.ok){
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            const error = (await response.json()).error;
+            throw new Error(`Status: ${error.status} Message: ${error.message}`);
         }
 
+        // Se retorna el id (string)
         const data = await response.json();
         return(data.id);
     } catch(error){
@@ -27,12 +29,17 @@ async function getUserId(tokens, setTokens){
     }
 }
 
-async function getTracks(url, tokens, setTokens) {
+// Busqueda de tracks
+async function getTracks(q, limit, offset, tokens, setTokens) {
     try {
         // Primero refrescamos nuestros token
         const freshTokens = await spotifyAuthPKCE.refreshToken(tokens, setTokens);
 
-        // Solicitamos las musicas a Spotify de acuerdo a el termino de busqueda
+        // Definimos la URL a usar
+        const url = offset
+            ? offset
+            : import.meta.env.VITE_SPOTIFY_API_ENDPOINT + `/search?type=track&q=${encodeURIComponent(q)}&limit=${encodeURIComponent(String(limit))}&locale=es_LA`;
+        // Solicitamos las musicas a Spotify de acuerdo a el termino de busqueda o offset
         const response = await fetch(url, {
         headers: {
             Authorization: `Bearer ${freshTokens.accessToken}`
@@ -41,10 +48,11 @@ async function getTracks(url, tokens, setTokens) {
 
         // Si la respuesta es error (fuera de 200)
         if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            const error = (await response.json()).error;
+            throw new Error(`Status: ${error.status} Message: ${error.message}`);
         }
 
+        // Retornamos un objeto con los datos de los resultados
         const data = await response.json();
         return data;
     } catch(error) {
@@ -60,7 +68,7 @@ export const spotifyGetData = { getUserId, getTracks };
     - Recibe tokens y setTokens
     - Retorna userId
 > Funcion para pedir tracks >>> getTracks()
-    - Recibe url de busqueda, tokens y setTokens
+    - Recibe termino de busqueda q, limite o offset, tokens y setTokens
     - Retorna datos de tracks (como envio Spotify pero ya un objeto(parseado))
 
 */

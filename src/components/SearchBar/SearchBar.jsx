@@ -4,19 +4,20 @@ import { spotifyGetData } from '../../api/spotifyGetData';
 import { spotifyFormatData } from '../../api/spotifyFormatData';
 
 function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
+    // Variable que almacena el texto del searchbar
     const [textoSearchbar, settextoSearchbar] = useState("");
+
 
     // Al presionar Buscar llama a la funcion que realiza la busqueda
     async function handleSubmit(e) {
         e.preventDefault();
 
+        // Definimos que la busqueda retorne 10 resultados
         const limit = 10;
-        const url = `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(textoSearchbar)}&limit=${encodeURIComponent(String(limit))}&locale=es_LA`;
-        
         // Primero solicitamos las musicas a Spotify
         // Luego Extraemos las musicas
         // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getTracks(url, tokens, setTokens).then(
+        spotifyGetData.getTracks(textoSearchbar, limit, false, tokens, setTokens).then(
             spotifyData => spotifyFormatData.extraerMusicas(spotifyData)
         ).then (
             extractedMusics => setListaDeResultados(extractedMusics)
@@ -46,7 +47,7 @@ function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
         // Primero solicitamos las musicas a Spotify
         // Luego Extraemos las musicas
         // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getTracks(url, tokens, setTokens).then(
+        spotifyGetData.getTracks(null, null, url, tokens, setTokens).then(
             spotifyData => {
                 return spotifyFormatData.extraerMusicas(spotifyData);
             }

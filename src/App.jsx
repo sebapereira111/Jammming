@@ -6,7 +6,8 @@ import Playlist from './components/Playlist/Playlist'
 import User from './api/user/user'
 
 function App() {
-     // Lista de musicas devueltas por la API
+    // Variables globales
+    // Lista de musicas devueltas por la API
     const [listaDeResultados, setListaDeResultados] = useState({
         query: "",
         tracks: [],
@@ -15,7 +16,7 @@ function App() {
             next: false
         }
     });
-     // Lista de musicas del playlist creado
+     // Lista de musicas del nuevo playlist creado
     const [listaDeMusicas, setListaDeMusicas] = useState([]);
     // Datos para realizar solicitud a la API de Spotify
     const [tokens, setTokens] = useState({

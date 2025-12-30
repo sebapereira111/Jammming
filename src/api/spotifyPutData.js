@@ -8,7 +8,7 @@ async function createPlaylist(playlistName, tokens, setTokens) {
         
         // Despues construimos nuestra URL
         const user = await spotifyGetData.getUserId(tokens, setTokens);
-        const url = `https://api.spotify.com/v1/users/${user}/playlists`;
+        const url = import.meta.env.VITE_SPOTIFY_API_ENDPOINT + `/users/${user}/playlists`;
         const payload = {
             method: 'POST',
             headers: {
@@ -47,7 +47,7 @@ async function addToPlaylist(playlistId, listaDeMusicas, tokens, setTokens) {
         const listaDeUris = listaDeMusicas.map((musica) => musica.id);
 
         // Despues construimos nuestra URL
-        const url = `https://api.spotify.com/v1/playlists/${playlistId}/tracks`;
+        const url = import.meta.env.VITE_SPOTIFY_API_ENDPOINT + `/playlists/${playlistId}/tracks`;
         const payload = {
             method: 'POST',
             headers: {

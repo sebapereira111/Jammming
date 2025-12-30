@@ -75,7 +75,7 @@ async function authorizePKCE() {
     ];
 
     // URL y parametros
-    const authUrl = new URL("https://accounts.spotify.com/authorize");
+    const authUrl = new URL(import.meta.env.VITE_SPOTIFY_AUTH_URL);
     const params =  {
         response_type: 'code',
         client_id: clientId,
@@ -157,7 +157,7 @@ async function getToken(code, codeVerifier) {
     const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
 
     // Los datos para la solicitud
-    const url = "https://accounts.spotify.com/api/token";
+    const url = import.meta.env.VITE_SPOTIFY_TOKEN_URL;
     const payload = {
         method: 'POST',
         headers: {
@@ -215,7 +215,7 @@ async function refreshToken(oldTokens, setTokens) {
     const clientId = import.meta.env.VITE_CLIENT_ID;
 
     // Los datos para la solicitud
-    const url = "https://accounts.spotify.com/api/token";
+    const url = import.meta.env.VITE_SPOTIFY_TOKEN_URL;
     const payload = {
         method: 'POST',
         headers: {
