@@ -15,4 +15,18 @@ header {
 	display: flex;
 	gap: 1rem;
 	align-items: flex-start;
+	justify-content: center;
+}
+
+@media (max-width: 1025px) {
+	.app-resultados-y-playlist {
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 1025px) {
+	header {
+		justify-content: flex-start;
+		padding-left: 1rem;
+	}
 }
