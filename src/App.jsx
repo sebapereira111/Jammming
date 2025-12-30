@@ -31,9 +31,9 @@ function App() {
             <header>
                 <h1>Jammming</h1>
             </header>
-            <SearchBar offset={listaDeResultados.offset} setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
+            <SearchBar setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
             <div className='app-resultados-y-playlist'>
-                <SearchResults listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} />
+                <SearchResults listaDeResultados={listaDeResultados} setListaDeResultados={setListaDeResultados} setListaDeMusicas={setListaDeMusicas} tokens={tokens} setTokens={setTokens} />
                 <Playlist listaDeMusicas={listaDeMusicas} setListaDeMusicas={setListaDeMusicas} tokens={tokens} setTokens={setTokens} />
             </div>
         </>

@@ -3,7 +3,7 @@ import './SearchBar.css'
 import { spotifyGetData } from '../../api/spotifyGetData';
 import { spotifyFormatData } from '../../api/spotifyFormatData';
 
-function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
+function SearchBar({ setListaDeResultados, tokens, setTokens }) {
     // Variable que almacena el texto del searchbar
     const [textoSearchbar, settextoSearchbar] = useState("");
 
@@ -17,7 +17,7 @@ function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
         // Primero solicitamos las musicas a Spotify
         // Luego Extraemos las musicas
         // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getTracks(textoSearchbar, limit, false, tokens, setTokens).then(
+        spotifyGetData.getTracks(textoSearchbar, limit, tokens, setTokens).then(
             spotifyData => spotifyFormatData.extraerMusicas(spotifyData)
         ).then (
             extractedMusics => setListaDeResultados(extractedMusics)
@@ -39,29 +39,6 @@ function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
         settextoSearchbar(e.target.value);
     }
 
-    // Para el offset al llamar a la API
-    async function handleOffset(e) {
-        // Definimos nuestra url
-        const url = offset[e.target.id];
-
-        // Primero solicitamos las musicas a Spotify
-        // Luego Extraemos las musicas
-        // Luego Guardamos esas musicas en setListaDeResultados
-        spotifyGetData.getTracks(null, null, url, tokens, setTokens).then(
-            spotifyData => {
-                return spotifyFormatData.extraerMusicas(spotifyData);
-            }
-        ).then (
-            extractedMusics => {
-                setListaDeResultados(extractedMusics);
-            }
-        ).catch(
-            error => {
-                console.error("Error en SearchBar - handleOffset", error);
-            }
-        );
-    }
-
     return (
         <>
             <form className='searchbar-principal' onSubmit={handleSubmit}>
@@ -78,10 +55,6 @@ function SearchBar({ offset, setListaDeResultados, tokens, setTokens }) {
                     <button type='button' className='searchbar-input-boton searchbar-input-boton-x' disabled={!textoSearchbar} onClick={handleBorrarBusqueda}>❌</button>
                 </div>
                 <button type="submit" disabled={!textoSearchbar} >Buscar</button>
-                 <div>
-                    <button id="previous" onClick={handleOffset} type='button' disabled={!offset.previous} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&lt;</button>
-                    <button id="next" onClick={handleOffset} type='button' disabled={!offset.next} className={"searchbar-toggle searchbar-toggle-seleccionado"}>&gt;</button>
-                 </div>
             </form>
         </>
     )

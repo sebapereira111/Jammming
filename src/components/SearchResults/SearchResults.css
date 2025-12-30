@@ -21,3 +21,21 @@
     border-radius: 0.5rem;
     font-size: 1rem;
 }
+
+.searchresults-nav {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.searchresults-nav-button {
+    background-color: var(--color-boton);
+    min-width: 2rem;
+    width: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+}
+
+.searchresults-nav-button-oculto {
+    visibility: hidden;
+}

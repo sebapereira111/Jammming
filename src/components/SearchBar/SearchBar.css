@@ -49,15 +49,3 @@
     background-color: white;
     z-index: -100;
 }
-
-.searchbar-toggle {
-    background-color: var(--color-boton-deshabilitado);
-    min-width: 2rem;
-    width: 2rem;
-    margin-right: 1rem;
-    margin-left: 1rem;
-}
-
-.searchbar-toggle-seleccionado {
-    background-color: var(--color-boton);
-}

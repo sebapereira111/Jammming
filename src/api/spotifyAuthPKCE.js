@@ -1,26 +1,5 @@
 import { spotifyGetData } from "./spotifyGetData";
 
-// Restauracion de los tokens del localstorage
-async function restoreFromStorage(setTokens, setUser) {
-    const data = localStorage.getItem("spotify_auth_data");
-    if (data) {
-        try {
-            const parse = JSON.parse(data);
-            const tokens = {
-                accessToken: parse.accessToken,
-                refreshToken: parse.refreshToken,
-                expiresAt: parse.expiresAt,
-            };
-            setTokens(tokens);
-            const userId = await spotifyGetData.getUserId(tokens, setTokens);
-            setUser(userId);
-        } catch (error) {
-            console.error("Error en restoreFromStorage:", error);
-            localStorage.removeItem("spotify_auth_data");
-        }
-    }
-}
-
 // Funciones auxiliares para PKCE
 // Code Verifier from Spotify
 const generateRandomString = (length) => {
@@ -51,6 +30,27 @@ async function generateCodeChallenge() {
     localStorage.setItem("spotify_code_verifier", codeVerifier);
     
     return codeChallenge;
+}
+
+// Restauracion de los tokens del localstorage
+async function restoreFromStorage(setTokens, setUser) {
+    const data = localStorage.getItem("spotify_auth_data");
+    if (data) {
+        try {
+            const parse = JSON.parse(data);
+            const tokens = {
+                accessToken: parse.accessToken,
+                refreshToken: parse.refreshToken,
+                expiresAt: parse.expiresAt,
+            };
+            setTokens(tokens);
+            const userId = await spotifyGetData.getUserId(tokens, setTokens);
+            setUser(userId);
+        } catch (error) {
+            console.error("Error en restoreFromStorage:", error);
+            localStorage.removeItem("spotify_auth_data");
+        }
+    }
 }
 
 // Redirect to Spotify authorization
@@ -282,9 +282,6 @@ VARIABLES IMPORTANTES
 > Funcion que restaura de storage >>> restoreFromStorage()
     - Recibe setTokens y setUser
     - Retorna nada
-> Funcion que almacena en storage >>> saveToStorage(tokens)
-    - Recibe un ojeto tokens y guarda en el storage
-    - No retorna nada
 > Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
     - No recibe ni retorna nada
 > Funcion para manejar el callback de Spotify >>> handleCallback()
