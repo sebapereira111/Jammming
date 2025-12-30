@@ -67,6 +67,8 @@ async function addToPlaylist(playlistId, listaDeMusicas, tokens, setTokens) {
             const errorBody = await response.json().catch(() => null);
             throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
         }
+
+        return true;
     } catch(error) {
         console.error("Error en addToPlaylist", error);
         throw error;
@@ -77,7 +79,10 @@ export const spotifyPutData = { createPlaylist, addToPlaylist };
 
 /*
 > Funcion para crear la playlist >>> createPlaylist
-    - Recibe playlistName, tokens, setTokens
+    - Recibe playlistName, tokens y setTokens
     - Retorna playlist ID
+> Funcion para agregar una lista de musicas a un playlist >>> addToPlaylist
+    - Recibe playlistId, listaDeMusicas, tokens y setTokens
+    - Retorna nada
 
 */
