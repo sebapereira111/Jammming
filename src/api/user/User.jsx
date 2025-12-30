@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { spotifyAuthPKCE } from '../spotifyAuthPKCE';
 import './User.css';
-import spotifyLogo from 'src/assets/Primary_Logo_Green_CMYK.svg';
+import spotifyLogo from '../../assets/Primary_Logo_Green_CMYK.svg';
 
 function User({ setTokens }) {
     // Para correr una sola vez el restoreFromStorage (por el strictmode)
