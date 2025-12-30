@@ -191,8 +191,10 @@ async function getToken(code, codeVerifier) {
             expiresAt: Date.now() + (responseBody.expires_in * 1000),
         }
 
-        // Se almacenan para uso posterior
-        localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
+        // Se almacenan para uso posterior solo en DEV
+        if (import.meta.env.DEV) {
+            localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
+        }
 
         // Se retornan los tokens
         return tokens;
@@ -247,8 +249,10 @@ async function refreshToken(oldTokens, setTokens) {
             expiresAt: Date.now() + (responseBody.expires_in * 1000),
         }
 
-        // Se actualiza en almacenamiento local
-        localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
+        // Se almacenan para uso posterior solo en DEV
+        if (import.meta.env.DEV) {
+            localStorage.setItem('spotify_auth_data', JSON.stringify(tokens));
+        }
 
         // Se guardan los nuevos tokens
         setTokens(tokens);
