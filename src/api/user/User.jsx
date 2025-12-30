@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
-import { spotifyAuthPKCE } from '../spotifyAuthPKCE'
-import './User.css'
+import { spotifyAuthPKCE } from '../spotifyAuthPKCE';
+import './User.css';
+import spotifyLogo from 'src/assets/Primary_Logo_Green_CMYK.svg';
 
 function User({ setTokens }) {
     // Para correr una sola vez el restoreFromStorage (por el strictmode)
@@ -45,7 +46,7 @@ function User({ setTokens }) {
     return (
         <>
             <div className='login-container'>
-                <img src="src/assets/Primary_Logo_Green_CMYK.svg" alt="Spotify logo" className='login-logo'/>
+                <img src={spotifyLogo} alt="Spotify logo" className='login-logo'/>
                 <button id="login" onClick={handleLogin} type='button' className='login-button'>{user ? user : "Iniciar sesion"}</button>
                 <button id="cerrar-sesion" onClick={handleCerrarSesion} type='button' className='cerrar-sesion-button' disabled={!user} >❌</button>
             </div>
