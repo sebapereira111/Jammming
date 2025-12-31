@@ -3,8 +3,6 @@ body {
 }
 
 :root {
-    width: 100%;
-    margin: 0 auto;
     --color-encabezado: #251658;
     --color-bloque: #251658;
     --color-texto: #E8E6F3;
@@ -13,6 +11,11 @@ body {
     --color-boton-deshabilitado: #9c9cc2;
     --color-input: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #7E39B7;
+}
+
+body {
+    margin: 0;
     background-color: #7E39B7;
 }
 
