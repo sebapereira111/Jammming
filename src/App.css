@@ -2,6 +2,8 @@ header {
 	z-index: 1000;
 	width: 100vw;
 	height: 4rem;
+	padding-top: 50vh;
+	margin-top: -50vh;
 	background-color: var(--color-encabezado);
 	display: flex;
 	justify-content: center;
