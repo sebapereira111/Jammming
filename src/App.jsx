@@ -28,9 +28,6 @@ function App() {
     return (
         <>
             <User setTokens={setTokens} />
-            <header>
-                <h1>Jammming</h1>
-            </header>
             <div className='app-contenido'>
                 <SearchBar setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
                 <div className='app-resultados-y-playlist'>

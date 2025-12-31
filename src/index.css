@@ -1,7 +1,3 @@
-body {
-    margin: 0;
-}
-
 :root {
     --color-encabezado: #251658;
     --color-bloque: #251658;
@@ -15,8 +11,11 @@ body {
 }
 
 body {
-    margin: 0;
-    background-color: #7E39B7;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100dvh;
+    background-color: var(--color-encabezado);
 }
 
 h1 {
@@ -79,4 +78,21 @@ button:active {
 
 button:disabled:active {
     box-shadow: none;
+}
+
+header {
+	z-index: 1000;
+    background-color: var(--color-encabezado);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    flex-shrink: 0;
+    height: 4rem;
+}
+
+.contenido-principal {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #7E39B7;
 }
