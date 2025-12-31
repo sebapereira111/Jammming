@@ -35,8 +35,17 @@
     display: none;
 }
 
-.playlist-botones-inferiores {
+.playlist-area-inferior {
     margin-top: 1rem;
     display: flex;
     justify-content: space-evenly;
 }
+
+@media (max-width: 400px) {
+    .playlist-botones-inferiores {
+        height: 2rem;
+        min-width: 7rem;
+        font-size: 0.75rem;
+    }
+}
+
