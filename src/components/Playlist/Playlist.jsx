@@ -50,7 +50,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas, tokens, setTokens }) {
                             className='playlist-nombre-texto'
                             type='text'
                             value={nombrePlaylist}
-                            placeholder='Nombre de playlist'
+                            placeholder='Playlist name'
                             onChange={handleChangeNombrePlaylist}
                         />
                         <button type='button' className={nombrePlaylist ? "playlist-boton-x-nombre" : "playlist-boton-x-nombre playlist-boton-x-nombre-oculto"} onClick={handleBorrarNombrePlaylist}>❌</button>
