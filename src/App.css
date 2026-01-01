@@ -8,7 +8,9 @@
 
 @media (max-width: 1025px) {
 	.app-resultados-y-playlist {
-		flex-wrap: wrap;
+		flex-direction: column;
+		align-items: stretch;
+
 	}
 }
 
