@@ -31,6 +31,10 @@
     font-size: 1rem;
 }
 
+.playlist-boton-x-nombre-oculto {
+    visibility: hidden;
+}
+
 .playlist-boton-x-nombre:disabled {
     display: none;
 }

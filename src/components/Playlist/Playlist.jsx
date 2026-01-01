@@ -53,7 +53,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas, tokens, setTokens }) {
                             placeholder='Nombre de playlist'
                             onChange={handleChangeNombrePlaylist}
                         />
-                        <button type='button' className='playlist-boton-x-nombre' disabled={!nombrePlaylist} onClick={handleBorrarNombrePlaylist}>❌</button>
+                        <button type='button' className={nombrePlaylist ? "playlist-boton-x-nombre" : "playlist-boton-x-nombre playlist-boton-x-nombre-oculto"} onClick={handleBorrarNombrePlaylist}>❌</button>
                     </div>
                 </form>
                 {listaDeMusicas.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
