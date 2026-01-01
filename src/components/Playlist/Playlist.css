@@ -35,10 +35,6 @@
     visibility: hidden;
 }
 
-.playlist-boton-x-nombre:disabled {
-    display: none;
-}
-
 .playlist-area-inferior {
     margin-top: 1rem;
     display: flex;
