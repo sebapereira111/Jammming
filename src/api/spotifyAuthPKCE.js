@@ -33,7 +33,7 @@ async function generateCodeChallenge() {
 }
 
 // Restauracion de los tokens del localstorage
-async function restoreFromStorage(setTokens, setUser) {
+async function restoreFromStorage(setTokens) {
     const data = localStorage.getItem("spotify_auth_data");
     if (data) {
         try {
@@ -45,11 +45,15 @@ async function restoreFromStorage(setTokens, setUser) {
             };
             setTokens(tokens);
             const userId = await spotifyGetData.getUserId(tokens, setTokens);
-            setUser(userId);
+            // Retorna el usuario
+            return userId;
         } catch (error) {
             console.error("Error en restoreFromStorage:", error);
             localStorage.removeItem("spotify_auth_data");
+            throw new Error(`Error de inicio de sesion. Error: ${error.message}`);
         }
+    } else {
+        return false;
     }
 }
 
@@ -92,7 +96,7 @@ async function authorizePKCE() {
 }
 
 // Gestionamos el callback y solicitamos los tokens
-async function handleCallback(setTokens, setUser) {
+async function handleCallback(setTokens) {
     // Extraemos los parametros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
@@ -107,7 +111,7 @@ async function handleCallback(setTokens, setUser) {
 
         // Si no hay codigo no es un callback
         if (!code) {
-            return ;
+            return false;
         }
 
         // Verificamos el state por seguridad
@@ -134,7 +138,9 @@ async function handleCallback(setTokens, setUser) {
         setTokens(newTokens);
 
         // Solicitamos el nombre de usuario y lo guardamos
-        setUser(spotifyGetData.getUserId(newTokens, setTokens));
+        const userId = await spotifyGetData.getUserId(newTokens, setTokens);
+        // Retorna el usuario
+        return userId;
     } catch(error) {
         console.error("Error en handleCallback:", error.message);
         localStorage.removeItem("spotify_code_verifier");
@@ -146,7 +152,7 @@ async function handleCallback(setTokens, setUser) {
                 expiresAt: null,
             });
         setUser("");
-        setOnCallback(false);
+        throw new Error(`Error de inicio de sesion. Error: ${error.message}`);
     }
 }
 
@@ -285,12 +291,12 @@ VARIABLES IMPORTANTES
     > generateCodeChallenge
 > Funcion que restaura de storage >>> restoreFromStorage()
     - Recibe setTokens y setUser
-    - Retorna nada
+    - Retorna el usuario o false
 > Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
     - No recibe ni retorna nada
 > Funcion para manejar el callback de Spotify >>> handleCallback()
     - Recibe setTokens y setUser
-    - Retorna nada
+    - Retorna el usuario o false
 > Funcion para conseguir los tokens >>> getToken()
     - Recibe code y codeVerifier
     - Retorna tokens

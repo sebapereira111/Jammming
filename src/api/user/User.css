@@ -12,6 +12,7 @@
 .login-logo {
     height: 3rem;
     margin-right: 1rem;
+    cursor: pointer;
 }
 
 .login-button {
@@ -26,3 +27,8 @@
     margin-right: 1rem;
 }
 
+@media (max-width: 400px) {
+    .login-desktop {
+        display: none;
+    }
+}

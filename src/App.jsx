@@ -27,7 +27,7 @@ function App() {
 
     return (
         <>
-            <User setTokens={setTokens} />
+            <User tokens={tokens} setTokens={setTokens} />
             <div className='app-contenido'>
                 <SearchBar setListaDeResultados={setListaDeResultados} tokens={tokens} setTokens= {setTokens} />
                 <div className='app-resultados-y-playlist'>
