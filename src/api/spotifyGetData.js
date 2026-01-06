@@ -22,7 +22,9 @@ async function getUserId(tokens, setTokens){
 
         // Se retorna el id (string)
         const data = await response.json();
-        return(data.id);
+        const id = data.id;
+        const display_name = data.display_name;
+        return display_name ? display_name : id;
     } catch(error){
         console.error("Error en getUserId", error);
         throw error;
