@@ -27,14 +27,14 @@ async function createPlaylist(playlistName, tokens, setTokens) {
 
         // Si la respuesta es error (fuera de 200)
         if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            throw new Error(`Status: ${response.status}`);
         }
 
         const data = await response.json();
         return data.id;
     } catch(error) {
         console.error("Error en createPlaylist", error);
+        throw error;
     }
 }
     
@@ -64,8 +64,7 @@ async function addToPlaylist(playlistId, listaDeMusicas, tokens, setTokens) {
 
         // Si la respuesta es error (fuera de 200)
         if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            throw new Error(`Status: ${response.status}`);
         }
 
         return true;

@@ -57,7 +57,9 @@ function SearchResults({ listaDeResultados, setListaDeResultados, setListaDeMusi
                         <h2>Resultados para {listaDeResultados.query}</h2>
                         <button className='searchresults-boton-x' onClick={handleBorrar}>❌</button>
                     </>
-                    : <p>Search something!</p>} {/* Las instrucciones se pueden mejorar */}
+                    : tokens.refreshToken ?
+                    <p>Search something!</p> 
+                    : <p>Please login to search something</p>} {/* Las instrucciones se pueden mejorar */}
                 </div>
                 <div className='searchresults-lista'>
                     {listaDeResultados.tracks.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"+"} setListaDeMusicas={setListaDeMusicas}/>))}

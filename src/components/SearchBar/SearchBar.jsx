@@ -54,7 +54,7 @@ function SearchBar({ setListaDeResultados, tokens, setTokens }) {
                     />
                     <button type='button' className='searchbar-input-boton searchbar-input-boton-x' disabled={!textoSearchbar} onClick={handleBorrarBusqueda}>❌</button>
                 </div>
-                <button type="submit" disabled={!textoSearchbar} >Buscar</button>
+                <button type="submit" disabled={!textoSearchbar  || !tokens.refreshToken} >Buscar</button>
             </form>
         </>
     )

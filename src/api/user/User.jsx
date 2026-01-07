@@ -3,6 +3,7 @@ import { spotifyAuthPKCE } from '../spotifyAuthPKCE';
 import './User.css';
 import spotifyLogoGreen from '../../assets/Primary_Logo_Green_CMYK.svg';
 import spotifyLogoBlack from '../../assets/Primary_Logo_Black_CMYK.svg';
+import { spotifyGetData } from '../spotifyGetData';
 
 function User({ tokens, setTokens }) {
     // Para correr una sola vez el restoreFromStorage (por el strictmode)
@@ -23,11 +24,14 @@ function User({ tokens, setTokens }) {
                         userId => {
                             if (userId) {
                                 setUser(userId);
-                                alert(`Sesion iniciada con el usuario ${userId}`);
+                                alert(`Sesion restaurada con el usuario ${userId}`);
                             }
                         }
                     ).catch(
-                        error => alert(error.message)
+                        error => {
+                            console.error(error);
+                            alert('Error restaurando sesion previa');
+                        }
                     )
                 })();
             }
@@ -38,17 +42,34 @@ function User({ tokens, setTokens }) {
     useEffect(() => {
         if (runCallback.current) {
             runCallback.current = false;
-            // Callback con mensaje de alerta
+            // Callback
             (async () => {
-                spotifyAuthPKCE.handleCallback(setTokens).then(
+                spotifyAuthPKCE.handleCallback().then(
+                    newTokens => {
+                        if(newTokens) {
+                            setTokens(newTokens);
+                            return spotifyGetData.getUserId(newTokens);
+                        } else {
+                            return false;
+                        }
+                    }
+                ).then(
                     userId => {
                         if (userId) {
                             setUser(userId);
-                            alert(`Sesion iniciada con el usuario ${userId}`);
                         }
                     }
                 ).catch(
-                    error => alert(error.message)
+                    error => {
+                        setTokens({
+                            accessToken: null,
+                            refreshToken: null,
+                            expiresAt: null,
+                        });
+                        setUser("");
+                        console.error("Error en User.jsx:", error);
+                        alert('Error iniciando sesion');
+                    }
                 )
             })();
         }
@@ -68,7 +89,6 @@ function User({ tokens, setTokens }) {
             refreshToken: null,
             expiresAt: null,
         });
-        alert(`Sesion ${user} cerrada`);
         setUser("");
     }
     

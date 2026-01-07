@@ -96,7 +96,7 @@ async function authorizePKCE() {
 }
 
 // Gestionamos el callback y solicitamos los tokens
-async function handleCallback(setTokens) {
+async function handleCallback() {
     // Extraemos los parametros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get("code");
@@ -134,25 +134,14 @@ async function handleCallback(setTokens) {
         // Limpiamos la URL
         window.history.replaceState({}, document.title, window.location.pathname);
 
-        // Guardamos los valores recibidos en la variable tokens
-        setTokens(newTokens);
-
-        // Solicitamos el nombre de usuario y lo guardamos
-        const userId = await spotifyGetData.getUserId(newTokens, setTokens);
-        // Retorna el usuario
-        return userId;
+        // Retorna los tokens
+        return newTokens;
     } catch(error) {
-        console.error("Error en handleCallback:", error.message);
         localStorage.removeItem("spotify_code_verifier");
         localStorage.removeItem("spotify_auth_state");
         window.history.replaceState({}, document.title, window.location.pathname);
-        setTokens({
-                accessToken: null,
-                refreshToken: null,
-                expiresAt: null,
-            });
-        setUser("");
-        throw new Error(`Error de inicio de sesion. Error: ${error.message}`);
+        console.error("Error en handleCallback:", error);
+        throw error;
     }
 }
 
@@ -184,8 +173,7 @@ async function getToken(code, codeVerifier) {
 
         // Si la respuesta da error
         if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            throw new Error(`Status: ${response.status}`);
         }
         
         const responseBody = await response.json();
@@ -205,7 +193,6 @@ async function getToken(code, codeVerifier) {
         // Se retornan los tokens
         return tokens;
     } catch (error) {
-        // Si el fetch da error
         console.error("Error en getToken", error);
         throw error;
     }
@@ -242,9 +229,9 @@ async function refreshToken(oldTokens, setTokens) {
 
         // Si la respuesta da error
         if (!response.ok) {
-            const errorBody = await response.json().catch(() => null);
-            throw new Error(`Status: ${response.status} Texto: ${response.statusText} Detalle: ${JSON.stringify(errorBody)}`);
+            throw new Error(`Status: ${response.status}`);
         }
+
 
         const responseBody = await response.json();
 
@@ -295,8 +282,8 @@ VARIABLES IMPORTANTES
 > Funcion que redirecciona a Spotify para la autorizacion >>> authorizePKCE()
     - No recibe ni retorna nada
 > Funcion para manejar el callback de Spotify >>> handleCallback()
-    - Recibe setTokens y setUser
-    - Retorna el usuario o false
+    - Recibe nada
+    - Retorna tokens o false
 > Funcion para conseguir los tokens >>> getToken()
     - Recibe code y codeVerifier
     - Retorna tokens

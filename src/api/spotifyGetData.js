@@ -15,9 +15,8 @@ async function getUserId(tokens, setTokens){
         });
 
         // Si la respuesta es error (fuera de 200)
-        if(!response.ok){
-            const error = (await response.json()).error;
-            throw new Error(`Status: ${error.status} Message: ${error.message}`);
+        if (!response.ok) {
+            throw new Error(`Status: ${response.status}`);
         }
 
         // Se retorna el id (string)
@@ -48,8 +47,7 @@ async function getTracks(q, limit, tokens, setTokens) {
 
         // Si la respuesta es error (fuera de 200)
         if (!response.ok) {
-            const error = (await response.json()).error;
-            throw new Error(`Status: ${error.status} Message: ${error.message}`);
+            throw new Error(`Status: ${response.status}`);
         }
 
         // Retornamos un objeto con los datos de los resultados
@@ -76,8 +74,7 @@ async function moreTracks(url, tokens, setTokens) {
 
         // Si la respuesta es error (fuera de 200)
         if (!response.ok) {
-            const error = (await response.json()).error;
-            throw new Error(`Status: ${error.status} Message: ${error.message}`);
+            throw new Error(`Status: ${response.status}`);
         }
 
         // Retornamos un objeto con los datos de los resultados

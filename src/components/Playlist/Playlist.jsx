@@ -22,8 +22,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas, tokens, setTokens }) {
         setListaDeMusicas([]);
     }
 
-    /* Funcion para guardar la playlist a Spotify
-    Temporalmente solo emite una alerta */
+    /* Funcion para guardar la playlist a Spotify */
     async function handleGuardarASpotify() {
         // Priemero creamos la playlist
         // Luego Guardamos los tracks
@@ -59,7 +58,7 @@ function Playlist({ listaDeMusicas, setListaDeMusicas, tokens, setTokens }) {
                 {listaDeMusicas.map((item, index) => (<Track key={item.id + index} index={index} musica={item} boton={"-"} setListaDeMusicas={setListaDeMusicas}/>))}
                 <div className='playlist-area-inferior'>
                     <button className='playlist-botones-inferiores' disabled={!listaDeMusicas.length} onClick={handleBorrarPlaylist} >Borrar playlist</button>
-                    <button className='playlist-botones-inferiores' disabled={!listaDeMusicas.length || !nombrePlaylist} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
+                    <button className='playlist-botones-inferiores' disabled={!listaDeMusicas.length || !nombrePlaylist || !tokens.refreshToken} onClick={handleGuardarASpotify} >Guardar a Spotify</button>
                 </div>
             </div>
         </>
