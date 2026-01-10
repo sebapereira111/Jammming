@@ -95,9 +95,9 @@ function User({ tokens, setTokens }) {
     return (
         <>
             <div className='login-container'>
-                <img onClick={handleLogin} src={tokens.refreshToken ? spotifyLogoGreen : spotifyLogoBlack} alt="Spotify logo" className='login-logo'/>
+                <img title={user ? `Logged in as ${user}` : "Login"} onClick={handleLogin} src={tokens.refreshToken ? spotifyLogoGreen : spotifyLogoBlack} alt="Spotify logo - Log in here" className='login-logo'/>
                 <div className='login-desktop'>
-                    <button id="login" onClick={handleLogin} type='button' className='login-button'>{user ? user : "Iniciar sesion"}</button>
+                    <button id="login" onClick={handleLogin} type='button' className='login-button'>{user ? user : "Login"}</button>
                     <button id="cerrar-sesion" onClick={handleCerrarSesion} type='button' className='cerrar-sesion-button' disabled={!user} >❌</button>
                 </div>
             </div>
